@@ -1,0 +1,372 @@
+muscle_pain_acupressure = {
+    "Neck Pain": ["Yintang (GV29)", "Ermen (SJ21)", "Auricular Lobule", "Jiache (ST6)"],
+    "Shoulder Pain": ["Hegu (LI4)", "Auricular Shen Men", "Tragus", "Quanliao (SI18)"],
+    "Jaw Pain (TMJ)": ["Jiache (ST6)", "Xiaguan (ST7)", "Tinggong (SI19)", "Tinghui (GB2)"],
+    "Back Pain (Upper & Lower)": ["Antitragus", "Shenmen (HT7)", "Auricular Shen Men", "Yintang (GV29)"],
+    "Sciatica Pain": ["Antitragus", "Concha", "Shangxing (GV23)"],
+    "Migraine & Headache": ["Taiyang (EX-HN5)", "Yintang (GV29)", "Auricular Helix", "Auricular Lobule"],
+    "Facial Muscle Tension": ["Jiache (ST6)", "Quanliao (SI18)", "Sibai (ST2)"],
+    "Sinus Pressure & Facial Pain": ["Bitong (LI20)", "Yingxiang (LI20)", "Sibai (ST2)"],
+    "Chest & Lung Pain": ["Concha", "Shangxing (GV23)", "Auricular Shen Men"],
+    "Arm & Hand Pain": ["Hegu (LI4)", "Auricular Shen Men", "Jiache (ST6)"],
+    "Hip Pain": ["Antitragus", "Concha", "Xiaguan (ST7)"],
+    "Leg Pain": ["Shangxing (GV23)", "Antitragus", "Concha"],
+    "Stress-Related Muscle Pain": ["Shenmen (HT7)", "Auricular Shen Men", "Taiyang (EX-HN5)"]
+}
+
+muscle_pain_acupressure = {
+    "Temple Pain": {
+        "Taiyang (EX-HN5) Left": 109,
+        "Taiyang (EX-HN5) Right": 338,
+        "Sizhukong (SJ 23) Left": 111,
+        "Sizhukong (SJ 23) Right": 340
+    },
+
+    "Mid Forehead Pain": {
+        "Yintang (EX-HN3)": 6,
+        "Shangxing (GV 23)": 8
+    },
+
+    "Top of the Head Pain": {
+        "Baihui (GV 20)": 10
+    },
+
+    "Side Forehead / Hairline Pain": {
+        "Touwei (ST 8) Left": 104,
+        "Touwei (ST 8) Right": 334
+    },
+
+     "Skull Pain / Top of the Head": {
+        "Baihui (GV 20)": 10,
+        "Shangxing (GV 23)": 8,
+        "Yintang (GV29)": None  
+    },
+
+    "Ear Area Pain": {
+        "Ermen (SJ 21) Left": 153,
+        "Ermen (SJ 21) Right": 383,
+        "Tinggong (SI 19) Left": 154,
+        "Tinggong (SI 19) Right": 384,
+        "Tinghui (GB 2) Left": 155,
+        "Tinghui (GB 2) Right": 385,
+        "Shangguan (GB 3) Left": 152,
+        "Shangguan (GB 3) Right": 382
+    },
+
+    "Jaw and Cheek Pain (TMJ)": {
+        "Jiache (ST 6) Left": 147,
+        "Jiache (ST 6) Right": 377,
+        "Xiaguan (ST 7) Left": 150,
+        "Xiaguan (ST 7) Right": 380,
+        "Tinggong (SI 19)": None,
+        "Tinghui (GB 2)": None,
+        "Quanliao (SI 18)": None,
+        "Yintang (GV29)": None
+    },
+
+    "Back of the Head/Neck Pain": {
+        "Waiguan (SJ 5) Left": 151,
+        "Waiguan (SJ 5) Right": 381,
+        "Yintang (GV29)": None,
+        "Ermen (SJ21)": None,
+        "Auricular Lobule": None,
+        "Fengchi (GB20)": None,
+        "Shangxing (GV23)": 8
+    },
+
+    "Hand Acupressure for Headaches": {
+        "Hegu (LI 4) Left": 40,
+        "Hegu (LI 4) Right": 270
+    },
+
+    "Hip-Linked Headache or Sciatica Relief": {
+        "Huantiao (GB 30) Left": 41,
+        "Huantiao (GB 30) Right": 271
+    },
+
+    "Neck Pain": [
+        "Yintang (GV29)", "Ermen (SJ21)", "Auricular Lobule",
+        "Jiache (ST6)", "Fengchi (GB20)", "Shangxing (GV23)"
+    ],
+
+    "Shoulder Pain": [
+        "Hegu (LI4)", "Auricular Shen Men", "Tragus",
+        "Quanliao (SI18)", "Jianjing (GB21)", "Waiguan (SJ5)"
+    ],
+
+    "Back Pain (Upper & Lower)": [
+        "Antitragus", "Shenmen (HT7)", "Auricular Shen Men",
+        "Yintang (GV29)", "Dazhui (GV14)", "Shenshu (BL23)"
+    ],
+
+    "Sciatica Pain": [
+        "Antitragus", "Concha", "Shangxing (GV23)",
+        "Huantiao (GB30)", "Weizhong (BL40)", "Chengshan (BL57)"
+    ],
+
+    "Migraine & Headache": [
+        "Taiyang (EX-HN5)", "Yintang (GV29)", "Auricular Helix",
+        "Auricular Lobule", "Baihui (GV20)", "Touwei (ST8)"
+    ],
+
+    "Facial Muscle Tension": [
+        "Jiache (ST6)", "Quanliao (SI18)", "Sibai (ST2)",
+        "Tinghui (GB2)", "Taiyang (EX-HN5)"
+    ],
+
+    "Sinus Pressure & Facial Pain": [
+        "Bitong (EX-HN8)", "Yingxiang (LI20)", "Sibai (ST2)",
+        "Shangyingxiang (LI19)", "Taiyang (EX-HN5)", "Yintang (GV29)"
+    ],
+
+    "Chest & Lung Pain": [
+        "Concha", "Shangxing (GV23)", "Auricular Shen Men",
+        "Zhongfu (LU1)", "Tanzhong (REN17)"
+    ],
+
+    "Arm & Hand Pain": [
+        "Hegu (LI4)", "Auricular Shen Men", "Jiache (ST6)",
+        "Waiguan (SJ5)", "Quchi (LI11)"
+    ],
+
+    "Hip Pain": [
+        "Antitragus", "Concha", "Xiaguan (ST7)",
+        "Huantiao (GB30)", "Juliao (GB29)"
+    ],
+
+    "Leg Pain": [
+        "Shangxing (GV23)", "Antitragus", "Concha",
+        "Zusanli (ST36)", "Chengshan (BL57)"
+    ],
+
+    "Stress-Related Muscle Pain": [
+        "Shenmen (HT7)", "Auricular Shen Men", "Taiyang (EX-HN5)",
+        "Yintang (GV29)", "Neiguan (PC6)"
+    ]
+}
+
+
+#tgis is whole dictionary of relevant and irrelevant accupressure points
+acupressure_points = {
+    # 🔹 Forehead and Eyebrows
+    "Third Eye (GV 24.5)": 168,
+    "Yintang (EX-HN3)": 6,
+    "Shangxing (GV 23)": 8,
+    "Shenting (GV 24)": 9,
+    "Baihui (GV 20)": 10,
+    "Xinhui (GV 22)": 7,
+    "Qiangjian (GV 18)": 5,
+    "Touwei (ST 8) Left": 104,
+    "Touwei (ST 8) Right": 334,
+    "Yangbai (GB 14) Left": 107,
+    "Yangbai (GB 14) Right": 336,
+    "Hanyan (GB 4) Left": 103,
+    "Hanyan (GB 4) Right": 333,
+    "Shuaigu (GB 8) Left": 102,
+    "Shuaigu (GB 8) Right": 332,
+
+    # 🔹 Temples and Sides of Head
+    "Taiyang (EX-HN5) Left": 109,
+    "Taiyang (EX-HN5) Right": 338,
+    "Sizhukong (SJ 23) Left": 111,
+    "Sizhukong (SJ 23) Right": 340,
+
+    # 🔹 Nose Bridge and Sides
+    "Shangyingxiang (LI 19) Left": 3,
+    "Shangyingxiang (LI 19) Right": 33,
+    "Yingxiang (LI 20) Left": 49,
+    "Yingxiang (LI 20) Right": 279,
+    "Bitong (EX-HN8) Left": 51,
+    "Bitong (EX-HN8) Right": 281,
+
+    # 🔹 Cheeks and Jawline
+    "Daying (ST 5) Left": 148,
+    "Daying (ST 5) Right": 378,
+    "Jiache (ST 6) Left": 147,
+    "Jiache (ST 6) Right": 377,
+    "Xiaguan (ST 7) Left": 150,
+    "Xiaguan (ST 7) Right": 380,
+    "Chengjiang (REN 24)": 17,
+
+    # 🔹 Mouth and Lips
+    "Renzhong (GV 26)": 2,
+    "Chengqiang (REN 23)": 15,
+    "Jiachengjiang (EX-HN3) Left": 14,
+    "Jiachengjiang (EX-HN3) Right": 44,
+    "Dicang (ST 4) Left": 43,
+    "Dicang (ST 4) Right": 273,
+
+    # 🔹 Ears (Expanded)
+    "Ermen (SJ 21) Left": 153,
+    "Ermen (SJ 21) Right": 383,
+    "Tinggong (SI 19) Left": 154,
+    "Tinggong (SI 19) Right": 384,
+    "Tinghui (GB 2) Left": 155,
+    "Tinghui (GB 2) Right": 385,
+    "Shangguan (GB 3) Left": 152,
+    "Shangguan (GB 3) Right": 382,
+    "Waiguan (SJ 5) Left": 151,
+    "Waiguan (SJ 5) Right": 381,
+    "Tingzhong (GB 11) Left": 156,
+    "Tingzhong (GB 11) Right": 386,
+
+    # 🔹 Scalp and Head
+    "Baihui (GV 20)": 10,
+    "Xinhui (GV 22)": 7,
+    "Qiangjian (GV 18)": 5,
+    "Chongyang (ST 42) Left": 145,
+    "Chongyang (ST 42) Right": 375,
+
+    # 🔹 Lower Jaw and Chin
+    "Lianquan (REN 23)": 14,
+    "Chengjiang (REN 24)": 17,
+
+    # 🔹 Additional Nose and Cheek Points
+    "Huantiao (GB 30) Left": 41,
+    "Huantiao (GB 30) Right": 271,
+
+    # 🔹 Additional Jaw and Ear Points
+    "Tinghui (GB 2) Left": 155,
+    "Tinghui (GB 2) Right": 385,
+
+    # 🔹 Additional Mouth and Chin Points
+    "Chengqiang (REN 23)": 15,
+    "Hegu (LI 4) Left": 40,
+    "Hegu (LI 4) Right": 270,
+}
+
+
+# Define a Dictionary for More Acupressure Points
+
+# muscle_pain_acupressure = {
+#     "Temple Pain": {
+#         "Taiyang (EX-HN5) Left": 109,
+#         "Taiyang (EX-HN5) Right": 338,
+#         "Sizhukong (SJ 23) Left": 111,
+#         "Sizhukong (SJ 23) Right": 340
+#     },
+
+#     "Mid Forehead Pain": {
+#         "Yintang (EX-HN3)": 6,
+#         "Shangxing (GV 23)": 8
+#     },
+
+#     "Top of the Head Pain": {
+#         "Baihui (GV 20)": 10
+#     },
+
+#     "Side Forehead / Hairline Pain": {
+#         "Touwei (ST 8) Left": 104,
+#         "Touwei (ST 8) Right": 334
+#     },
+
+#      "Skull Pain / Top of the Head": {
+#         "Baihui (GV 20)": 10,
+#         "Shangxing (GV 23)": 8,
+#         "Yintang (GV29)": None  
+#     },
+
+#     "Ear Area Pain": {
+#         "Ermen (SJ 21) Left": 153,
+#         "Ermen (SJ 21) Right": 383,
+#         "Tinggong (SI 19) Left": 154,
+#         "Tinggong (SI 19) Right": 384,
+#         "Tinghui (GB 2) Left": 155,
+#         "Tinghui (GB 2) Right": 385,
+#         "Shangguan (GB 3) Left": 152,
+#         "Shangguan (GB 3) Right": 382
+#     },
+
+#     "Jaw and Cheek Pain (TMJ)": {
+#         "Jiache (ST 6) Left": 147,
+#         "Jiache (ST 6) Right": 377,
+#         "Xiaguan (ST 7) Left": 150,
+#         "Xiaguan (ST 7) Right": 380,
+#         "Tinggong (SI 19)": None,
+#         "Tinghui (GB 2)": None,
+#         "Quanliao (SI 18)": None,
+#         "Yintang (GV29)": None
+#     },
+
+#     "Back of the Head/Neck Pain": {
+#         "Waiguan (SJ 5) Left": 151,
+#         "Waiguan (SJ 5) Right": 381,
+#         "Yintang (GV29)": None,
+#         "Ermen (SJ21)": None,
+#         "Auricular Lobule": None,
+#         "Fengchi (GB20)": None,
+#         "Shangxing (GV23)": 8
+#     },
+
+#     "Hand Acupressure for Headaches": {
+#         "Hegu (LI 4) Left": 40,
+#         "Hegu (LI 4) Right": 270
+#     },
+
+#     "Hip-Linked Headache or Sciatica Relief": {
+#         "Huantiao (GB 30) Left": 41,
+#         "Huantiao (GB 30) Right": 271
+#     },
+
+#     "Neck Pain": [
+#         "Yintang (GV29)", "Ermen (SJ21)", "Auricular Lobule",
+#         "Jiache (ST6)", "Fengchi (GB20)", "Shangxing (GV23)"
+#     ],
+
+#     "Shoulder Pain": [
+#         "Hegu (LI4)", "Auricular Shen Men", "Tragus",
+#         "Quanliao (SI18)", "Jianjing (GB21)", "Waiguan (SJ5)"
+#     ],
+
+#     "Back Pain (Upper & Lower)": [
+#         "Antitragus", "Shenmen (HT7)", "Auricular Shen Men",
+#         "Yintang (GV29)", "Dazhui (GV14)", "Shenshu (BL23)"
+#     ],
+
+#     "Sciatica Pain": [
+#         "Antitragus", "Concha", "Shangxing (GV23)",
+#         "Huantiao (GB30)", "Weizhong (BL40)", "Chengshan (BL57)"
+#     ],
+
+#     "Migraine & Headache": [
+#         "Taiyang (EX-HN5)", "Yintang (GV29)", "Auricular Helix",
+#         "Auricular Lobule", "Baihui (GV20)", "Touwei (ST8)"
+#     ],
+
+#     "Facial Muscle Tension": [
+#         "Jiache (ST6)", "Quanliao (SI18)", "Sibai (ST2)",
+#         "Tinghui (GB2)", "Taiyang (EX-HN5)"
+#     ],
+
+#     "Sinus Pressure & Facial Pain": [
+#         "Bitong (EX-HN8)", "Yingxiang (LI20)", "Sibai (ST2)",
+#         "Shangyingxiang (LI19)", "Taiyang (EX-HN5)", "Yintang (GV29)"
+#     ],
+
+#     "Chest & Lung Pain": [
+#         "Concha", "Shangxing (GV23)", "Auricular Shen Men",
+#         "Zhongfu (LU1)", "Tanzhong (REN17)"
+#     ],
+
+#     "Arm & Hand Pain": [
+#         "Hegu (LI4)", "Auricular Shen Men", "Jiache (ST6)",
+#         "Waiguan (SJ5)", "Quchi (LI11)"
+#     ],
+
+#     "Hip Pain": [
+#         "Antitragus", "Concha", "Xiaguan (ST7)",
+#         "Huantiao (GB30)", "Juliao (GB29)"
+#     ],
+
+#     "Leg Pain": [
+#         "Shangxing (GV23)", "Antitragus", "Concha",
+#         "Zusanli (ST36)", "Chengshan (BL57)"
+#     ],
+
+#     "Stress-Related Muscle Pain": [
+#         "Shenmen (HT7)", "Auricular Shen Men", "Taiyang (EX-HN5)",
+#         "Yintang (GV29)", "Neiguan (PC6)"
+#     ]
+# }
+
+# ear_landmarks = [234, 454, 238, 458, 233, 453, 132, 361, 127, 356, 136, 366, 239, 459, 135, 355, 116, 346, 111, 341, 106, 336]

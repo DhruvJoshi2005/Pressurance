@@ -1,0 +1,245 @@
+{ 
+  "Migraine & Headache": [
+    {
+      "name": "Taiyang (EX-HN5)",
+      "location": "Temples, one finger-width lateral to the outer end of the eyebrow.",
+      "duration": 15,
+      "landmark1": 109,
+      "landmark2": 338,
+      "how": "Use index fingers to press gently in circular motion.",
+      "precaution": "Avoid pressing too hard, especially if there's inflammation or throbbing."
+    },
+    {
+      "name": "Auricular Helix (Left & Right)",
+      "location": "Outer rim of both ears.",
+      "duration": 20,
+      "landmark1": 234,
+      "landmark2": 454,
+      "how": "Pinch gently between thumb and forefinger.",
+      "precaution": "Ensure your nails don\u2019t hurt the skin."
+    },
+    {
+      "name": "Auricular Lobule (Left & Right)",
+      "location": "Earlobes",
+      "duration": 15,
+      "landmark1": 127,
+      "landmark2": 356,
+      "how": "Massage using thumb and index finger in circular motion.",
+      "precaution": "Avoid strong pinching or prolonged pressure."
+    },
+    {
+      "name": "Baihui (GV20)",
+      "location": "Top center of the head.",
+      "duration": 10,
+      "landmark1": 10,
+      "landmark2": 10,
+      "how": "Press gently with the middle finger.",
+      "precaution": "Sit comfortably in a quiet space while pressing."
+    },
+    {
+      "name": "Touwei (ST8)",
+      "location": "At the corner of the forehead, approx. 4 finger-widths from midline.",
+      "duration": 20,
+      "landmark1": 68,
+      "landmark2": 298,
+      "how": "Press in circular motion using fingertips.",
+      "precaution": "Avoid pressing if area is tender or bruised."
+    }
+  ],
+  "Temple Pain": [
+    {
+      "name": "Taiyang (EX-HN5)",
+      "location": "One finger-width lateral to the outer end of the eyebrow (both sides).",
+      "duration": 30,
+      "landmark1": 109,
+      "landmark2": 338,
+      "how": "Use index or middle fingers to gently press in small circular motion.",
+      "precaution": "Avoid pressing too hard, especially during active headache."
+    },
+    {
+      "name": "Sizhukong (SJ23)",
+      "location": "In the hollow at the lateral end of the eyebrow (both sides).",
+      "duration": 20,
+      "landmark1": 111,
+      "landmark2": 340,
+      "how": "Use fingertips to lightly tap or press and hold.",
+      "precaution": "Be gentle to avoid eye discomfort or irritation."
+    }
+  ],
+  "Mid Forehead Pain": [
+    {
+      "name": "Yintang (EX-HN3)",
+      "location": "Between the eyebrows, in the center (third eye point).",
+      "duration": 30,
+      "landmark1": 6,
+      "landmark2": 6,
+      "how": "Gently press with index or middle finger in slow circular motion.",
+      "precaution": "Use light pressure and a calm setting to avoid tension."
+    },
+    {
+      "name": "Shangxing (GV23)",
+      "location": "1 finger-width into the hairline above the mid-forehead.",
+      "duration": 20,
+      "landmark1": 8,
+      "landmark2": 8,
+      "how": "Press with fingertips in a slow circular movement.",
+      "precaution": "Avoid in case of scalp injury or excessive tenderness."
+    }
+  ],
+  "Top of the Head Pain": [
+    {
+      "name": "Baihui (GV20)",
+      "location": "Top of the head, at the intersection of midline and a line connecting the tops of the ears.",
+      "duration": 15,
+      "landmark1": 10,
+      "landmark2": 10,
+      "how": "Use middle finger to apply light downward pressure.",
+      "precaution": "Sit comfortably and breathe deeply while pressing."
+    }
+  ],
+  "Side Forehead / Hairline Pain": [
+    {
+      "name": "Touwei (ST8)",
+      "location": "At the corner of the forehead, approx. 4 finger-widths lateral from the midline at the hairline (both sides).",
+      "duration": 20,
+      "landmark1": 104,
+      "landmark2": 334,
+      "how": "Use fingertips to press in gentle circular motion.",
+      "precaution": "Avoid pressing if there's sensitivity or bruising in the area."
+    }
+  ],
+  "Skull Pain / Top of the Head": [
+    {
+      "name": "Baihui (GV20)",
+      "location": "Top center of the head.",
+      "duration": 15,
+      "landmark1": 10,
+      "landmark2": 10,
+      "how": "Gently press with fingertips in circular motion.",
+      "precaution": "Be seated and relaxed while stimulating this point."
+    },
+    {
+      "name": "Shangxing (GV23)",
+      "location": "1 finger-width into the hairline above the forehead.",
+      "duration": 20,
+      "landmark1": 8,
+      "landmark2": 8,
+      "how": "Apply light pressure with fingers in circles.",
+      "precaution": "Not suitable during scalp inflammation or wounds."
+    },
+    {
+      "name": "Yintang (GV29)",
+      "location": "Between the eyebrows.",
+      "duration": 30,
+      "landmark1": 6,
+      "landmark2": 6,
+      "how": "Apply soft tapping or circular massage with index finger.",
+      "precaution": "Avoid pressing too long or with sharp nails."
+    }
+  ],
+  "Ear Area Pain": [
+    {
+      "name": "Ermen (SJ21)",
+      "location": "In front of the ear, at the depression formed when the mouth is slightly open.",
+      "duration": 20,
+      "landmark1": 153,
+      "landmark2": 383,
+      "how": "Use fingertips to press and hold gently.",
+      "precaution": "Do not press with excessive force; avoid in case of ear infections."
+    },
+    {
+      "name": "Tinggong (SI19)",
+      "location": "In the depression between the tragus and the condyle of the mandible, in front of the ear canal.",
+      "duration": 20,
+      "landmark1": 154,
+      "landmark2": 384,
+      "how": "Press gently while mouth is slightly open.",
+      "precaution": "Avoid pressing if there is pain while opening mouth."
+    },
+    {
+      "name": "Tinghui (GB2)",
+      "location": "Just in front of the lower ear canal opening.",
+      "duration": 25,
+      "landmark1": 155,
+      "landmark2": 385,
+      "how": "Massage gently using small circular motions.",
+      "precaution": "Be gentle and avoid ear irritation."
+    },
+    {
+      "name": "Shangguan (GB3)",
+      "location": "Above the zygomatic arch, in front of the ear.",
+      "duration": 20,
+      "landmark1": 152,
+      "landmark2": 382,
+      "how": "Press gently in a slow circular motion.",
+      "precaution": "Use with caution in TMJ or jaw joint disorders."
+    }
+  ],
+  "Jaw and Cheek Pain (TMJ)": [
+    {
+      "name": "Jiache (ST6)",
+      "location": "On the masseter muscle, one finger-width anterior and superior to the angle of the jaw (both sides).",
+      "duration": 25,
+      "landmark1": 147,
+      "landmark2": 377,
+      "how": "Clench teeth to locate muscle, then massage slowly with fingertips.",
+      "precaution": "Avoid excessive pressure on the jaw joint."
+    },
+    {
+      "name": "Xiaguan (ST7)",
+      "location": "In front of the ear and below the zygomatic arch (cheekbone).",
+      "duration": 20,
+      "landmark1": 150,
+      "landmark2": 380,
+      "how": "Apply firm circular massage with fingertip.",
+      "precaution": "Avoid pressing while chewing or talking."
+    },
+    {
+      "name": "Quanliao (SI18)",
+      "location": "Directly below the outer corner of the eye, in the hollow of the cheekbone.",
+      "duration": 15,
+      "landmark1":232,
+      "landmark2": 412,
+      "how": "Press gently using index fingers in small circles.",
+      "precaution": "Avoid excessive pressure near the eye socket."
+    }
+  ],  
+  "Back of the Head/Neck Pain": [
+    {
+      "name": "Waiguan (SJ5)",
+      "location": "Two finger-widths above the wrist crease, between the two tendons on the back of the forearm.",
+      "duration": 30,
+      "landmark1": 151,
+      "landmark2": 381,
+      "how": "Apply firm pressure with thumb or knuckle.",
+      "precaution": "Avoid if there’s skin damage or nerve sensitivity."
+    },
+    {
+      "name": "Fengchi (GB20)",
+      "location": "Below the base of the skull, in the depressions on either side of the neck muscles.",
+      "duration": 25,
+      "landmark1": 234,
+      "landmark2": 454,
+      "how": "Massage with thumbs in upward circular motion.",
+      "precaution": "Use light pressure if dizzy or sensitive."
+    },
+    {
+      "name": "Auricular Lobule",
+      "location": "Earlobe area.",
+      "duration": 30,
+      "landmark1": 127,
+      "landmark2": 356,
+      "how": "Massage gently between thumb and index finger.",
+      "precaution": "Avoid if sore or infected."
+    },
+    {
+      "name": "Yintang (GV29)",
+      "location": "Between the eyebrows.",
+      "duration": 20,
+      "landmark1": 6,
+      "landmark2": 6,
+      "how": "Press gently in a circular motion.",
+      "precaution": "Be gentle to prevent eye strain."
+    }
+  ]
+}

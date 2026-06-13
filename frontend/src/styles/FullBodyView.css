@@ -1,0 +1,163 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.fbv-root {
+  min-height: 100vh;
+  background: #f0f6ff;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.fbv-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.fbv-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fbv-back-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fbv-back-btn:hover { background: #e5e7eb; }
+
+.fbv-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1565c0;
+  letter-spacing: -0.3px;
+}
+
+/* ── Step indicator ─────────────────────────────────── */
+.fbv-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.fbv-step {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.fbv-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.fbv-step-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.fbv-step--done .fbv-step-num  { background: #1565c0; color: #fff; }
+.fbv-step--done .fbv-step-label { color: #1565c0; }
+
+.fbv-step--next .fbv-step-num  { background: #e5e7eb; color: #9ca3af; }
+.fbv-step--next .fbv-step-label { color: #9ca3af; }
+
+.fbv-step-line {
+  width: 32px;
+  height: 2px;
+  background: #e5e7eb;
+  margin: 0 8px;
+}
+
+/* ── Continue button ────────────────────────────────── */
+.fbv-continue-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1565c0;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  box-shadow: 0 3px 10px rgba(21,101,192,0.3);
+}
+.fbv-continue-btn:hover {
+  background: #0d47a1;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(21,101,192,0.4);
+}
+
+/* ── Main ───────────────────────────────────────────── */
+.fbv-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 28px 28px;
+  gap: 14px;
+}
+
+.fbv-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.fbv-viewer-card {
+  width: 100%;
+  max-width: 860px;
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(21,101,192,0.08);
+  overflow: hidden;
+  min-height: 520px;
+}
+
+@media (max-width: 768px) {
+  .fbv-steps { display: none; }
+  .fbv-header { padding: 0 16px; }
+  .fbv-main { padding: 14px 16px 20px; }
+}

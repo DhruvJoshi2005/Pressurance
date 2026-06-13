@@ -1,0 +1,111 @@
+.instruction-panel {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  .instruction-panel h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 0.75rem;
+  }
+  
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .step-item {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1.25rem;
+    border-left: 4px solid #3498db;
+  }
+  
+  .step-item h3 {
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+  }
+  
+  .step-item p {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+  
+  /* Active session styling */
+  /* Active session styling */
+.active-session {
+    border: 2px solid #3498db;
+  }
+  
+  .session-progress {
+    margin-bottom: 1.5rem;
+  }
+  
+  .step-indicator {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #3498db;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  .current-step {
+    background-color: #e3f2fd;
+    border-radius: 6px;
+    padding: 1.25rem;
+    border-left: 4px solid #3498db;
+  }
+  
+  .current-step h3 {
+    color: #1565c0;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  .current-step p {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+  
+  .timer {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .timer-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #e74c3c;
+  }
+  
+  .timer-label {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }

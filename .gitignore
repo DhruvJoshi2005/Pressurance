@@ -1,0 +1,21 @@
+# Node stuff
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Python stuff
+backend-python/__pycache__/
+backend-python/.env
+backend-python/venv/
+*.pyc
+
+# Node backend
+backend/.env
+backend/node_modules/
+
+# Zip files
+**/*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
