@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import api from "../utils/api";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -115,14 +116,7 @@ controls.update();
         current = hits[0].object;
         outlinePass.selectedObjects = [current];
 
-        fetch("http://localhost:8000/humanModel/log-pain", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({ area: current.name }),
-        });
+        api.post("/humanModel/log-pain", { area: current.name });
       }
     }
 

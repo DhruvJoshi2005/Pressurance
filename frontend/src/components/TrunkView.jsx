@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import api from "../utils/api";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -127,19 +128,7 @@ export default function TrunkView({ onBack }) {
           outlinePass.selectedObjects = [clicked];
           current = clicked;
 
-          const token = localStorage.getItem("token");
-
-          fetch("http://localhost:8000/humanModel/log-pain", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ area: clicked.name }),
-          })
-            .then((r) => r.json())
-            .then((d) => console.log("Logged:", d))
-            .catch(console.error);
+          api.post("/humanModel/log-pain", { area: clicked.name }).catch(console.error);
         }
       }
     }

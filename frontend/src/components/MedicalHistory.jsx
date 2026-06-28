@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import {
   Activity, Brain, Heart, Wind, Utensils,
@@ -151,18 +151,8 @@ export default function MedicalHistory() {
     setLoading(true);
     localStorage.setItem("medicalHistory", JSON.stringify(selected));
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        "http://localhost:8000/auth/medical-history",
-        { conditions: selected },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      await axios.post(
-        "http://localhost:8000/humanModel/start-session",
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.post("/auth/medical-history", { conditions: selected });
+      await api.post("/humanModel/start-session", {});
 
       navigate("/Accudashboard");
     } catch (err) {
@@ -175,12 +165,7 @@ export default function MedicalHistory() {
 
   const handleSkip = async () => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        "http://localhost:8000/humanModel/start-session",
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.post("/humanModel/start-session", {});
     } catch {}
     navigate("/Accudashboard");
   };

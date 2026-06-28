@@ -1,5 +1,6 @@
 // src/components/HeadView.jsx
 import React, { useEffect, useRef } from "react";
+import api from "../utils/api";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -124,17 +125,7 @@ export default function HeadView({ onBack, onZoneSelected }) {
           currentlyGlowing = clicked;
           setZone(region);
 
-          const token = localStorage.getItem("token");
-          fetch("http://localhost:8000/humanModel/log-pain", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ area: region }),
-          })
-            .then((res) => res.json())
-            .catch((err) => console.error("Error:", err));
+          api.post("/humanModel/log-pain", { area: region }).catch(console.error);
         }
       }
     }

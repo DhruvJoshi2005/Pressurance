@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Activity, ThumbsUp, ThumbsDown, CheckCircle2 } from "lucide-react";
+import api from "../utils/api";
 import "../styles/SessionFeedback.css";
 
 export default function SessionFeedback() {
@@ -23,7 +24,6 @@ export default function SessionFeedback() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    const token = localStorage.getItem("token");
 
     const entries = points.map((p) => ({
       recommendationId,
@@ -34,13 +34,7 @@ export default function SessionFeedback() {
 
     try {
       await Promise.all(
-        entries.map((entry) =>
-          fetch("http://localhost:8000/recommendations/feedback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify(entry),
-          })
-        )
+        entries.map((entry) => api.post("/recommendations/feedback", entry))
       );
       setSubmitted(true);
     } catch (err) {
