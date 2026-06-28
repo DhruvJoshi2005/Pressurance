@@ -1,0 +1,348 @@
+# PRESSURANCE
+### A Hybrid AI System for Real-Time Acupressure Point Guidance Using Facial and Body Landmark Detection with an Explainable Rule-Based Recommendation Engine
+
+**Final Year Project Report**
+
+Submitted by: [Your Name] (Roll No. [XXXXXXX])
+Department of [Your Department]
+[Your Institution Name]
+Under the guidance of [Guide Name]
+Academic Year: [20XX–20XX]
+
+---
+
+## Abstract
+
+Pressurance is a full-stack web application that guides a user through self-administered acupressure for head, neck, and shoulder discomfort. The system combines three distinct layers of capability: an interactive 3D head model for indicating where pain is felt; a transparent, rule-based recommendation engine that selects which acupressure point(s) are conventionally associated with the reported pain location, pain quality, severity, and relevant medical history; and a real-time augmented-reality guidance layer that uses pre-trained deep-learning landmark detection models to locate the recommended point on the user's own live camera feed, paired with synthesized voice instructions on technique and duration.
+
+A central design decision in this project is the deliberate separation between perception and decision-making. Facial and body landmark detection (MediaPipe's Face Landmarker and Pose Landmarker) are genuine pre-trained neural network models — this is where the project's actual machine learning lives. Point selection, by contrast, is handled by an explainable rule-based engine rather than a trained model, because no labelled outcome data ("this point helped this person") currently exists to learn from; a model trained on no real data would not provide genuine predictive value and would be harder to audit for safety than a transparent rule set. The system is explicitly designed with an upgrade path (Section 12) to incorporate a learned re-ranking layer once real usage feedback accumulates.
+
+The current implementation provides complete coverage of 16 distinct pain zones across the head, neck, and shoulders, each routed automatically to one of three guidance modes — live face tracking, live body-pose tracking, or a static diagram — depending on whether the relevant point is physically visible to a front-facing camera. All facial and body video is processed entirely client-side in the browser; no camera frame is transmitted to or stored on the server at any point.
+
+---
+
+## Table of Contents
+
+1. Introduction
+2. Background
+3. System Architecture
+4. Design Rationale: A Hybrid AI Architecture
+5. Module-Level Design
+6. Complete User Flow
+7. API Reference
+8. Testing and Evaluation
+9. Ethical Considerations and Safety
+10. Limitations
+11. Future Work
+12. Conclusion
+
+References
+Appendix A: Complete Zone-to-Point Mapping
+
+---
+
+## 1. Introduction
+
+### 1.1 Problem Statement
+A person experiencing localized pain — a headache behind the temple, tightness at the base of the skull, jaw tension — typically has no convenient way to find out which acupressure point, if any, is conventionally associated with that specific symptom, nor a way to locate that point precisely on their own face or body without a trained practitioner present.
+
+### 1.2 Motivation
+Acupressure is widely self-administered, requires no equipment, and carries at least moderate-quality evidence of benefit for certain headache types when assessed by independent reviewers (see Section 2.1). However, instructional material available to most people is static — a diagram or article — rather than interactive guidance tailored to the specific pain being reported and located precisely on the user's own body in real time. This project closes that gap by combining structured pain intake, a transparent point-selection method, and live augmented-reality overlay in a single flow.
+
+### 1.3 Objectives
+1. Allow users to indicate the location, type, and severity of head, neck, and shoulder pain through an interactive 3D model and a guided questionnaire.
+2. Recommend acupressure point(s) appropriate to the reported pain and the user's relevant medical history, using a method that is fully transparent and auditable.
+3. Visually guide the user to the recommended point in real time using their own device camera, wherever that point is physically visible to a front-facing camera.
+4. Provide synthesized spoken instructions covering technique and duration for each point.
+5. Collect structured user feedback to support future, evidence-driven refinement of the recommendation logic.
+
+### 1.4 Scope and Limitations
+
+**In scope for the current version:**
+- Head, neck, and shoulder regions — 16 distinct, individually addressable pain zones.
+- A rule-based recommendation engine covering all 16 zones.
+- Real-time face-tracked and pose-tracked AR guidance, with a diagram fallback for zones not visible to a front camera.
+- Structured feedback capture (per-point thumbs up/down with optional notes).
+
+**Explicitly out of scope for the current version:**
+- Other body regions — trunk, legs, and hands are modelled in 3D in the codebase but are not yet wired into the full assessment flow.
+- A trained or learned recommendation model (see Section 4.2 for why, and Section 11 for the planned upgrade path).
+- Clinical validation of patient outcomes. This is a wellness guidance tool, not a diagnostic or treatment device (see Section 9).
+
+---
+
+## 2. Background
+
+### 2.1 Acupressure: Evidence Base
+The U.S. National Center for Complementary and Integrative Health (NCCIH) reports moderate-quality evidence, drawn from a 2016 evaluation of roughly 22 studies covering close to 5,000 participants, that acupuncture-point stimulation may reduce migraine frequency, and moderate-to-low-quality evidence of a reduction in tension-headache frequency [1]. A systematic review focused specifically on acupressure (rather than needle acupuncture) for headache is indexed on PubMed under Lee et al., "Acupressure for treating headache: a systematic review" [2]. Across this literature, the exact physiological mechanism remains unclear, and authors consistently recommend that anyone considering acupressure consult a healthcare professional first — a recommendation this project's UI reflects directly (Section 9).
+
+### 2.2 Computer Vision for Landmark Detection
+MediaPipe's Face Landmarker and Pose Landmarker are pre-trained convolutional neural network models distributed by Google that run client-side via WebAssembly, returning normalized coordinates for 468–478 facial points or 33 body pose points respectively from a single camera frame, in real time and without a server round-trip [3]. These are the system's only genuinely learned components, and the distinction between this perception layer and the rule-based decision layer described in Section 4 is a central design point of this report.
+
+---
+
+## 3. System Architecture
+
+### 3.1 Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite, React Router v6 |
+| Styling | CSS Modules, Inter font, glassmorphism |
+| AR / Camera | @mediapipe/tasks-vision — Face Landmarker + Pose Landmarker |
+| Voice | Web Speech API (SpeechSynthesisUtterance) |
+| Backend | FastAPI (Python) |
+| Database | MongoDB via Motor (async driver) |
+| Auth | JWT access token (1 hr) + refresh token (7 days), bcrypt password hashing |
+| HTTP Client | Axios — single centralized instance (`utils/api.js`) with automatic token attachment and refresh-on-401 |
+| OAuth | fastapi-sso (optional Google login) |
+
+### 3.2 High-Level Architecture
+The system is a three-tier architecture:
+- **Presentation tier** — React SPA responsible for the 3D body model, assessment forms, and the camera-based AR session. All MediaPipe inference happens here, in-browser.
+- **Application tier** — FastAPI service exposing authentication, medical history, pain assessment, and recommendation endpoints (full list in Section 7).
+- **Data tier** — MongoDB, storing users, sessions, assessments, recommendations, and feedback (schema in Section 3.3).
+
+Critically, the camera feed itself never crosses into the application or data tier — landmark detection and AR rendering are entirely client-side, so no video frame is ever transmitted to or stored by the backend.
+
+### 3.3 Database Schema
+
+| Collection | Contents |
+|---|---|
+| users | email, bcrypt password hash, refresh_tokens[], medical_history{}, medical_history_completed |
+| pain_area | sessions[] with timestamps and pain-area click logs per user |
+| pain_assessments | symptoms[], painTypes[], severity, bodyPart, timestamps per assessment |
+| point_recommendations | zone, ranked points, scores, and reasons per AI recommendation |
+| session_feedback | thumbs up/down, rating, notes — per point, per recommendation |
+
+---
+
+## 4. Design Rationale: A Hybrid AI Architecture
+
+### 4.1 Two Different Kinds of "Intelligence" in This System
+A system like this risks being misunderstood as either "just an AR filter" or "a black-box AI diagnosing pain." Neither is accurate. The architecture deliberately separates two layers with very different properties:
+
+| Component | Type | Why this matters |
+|---|---|---|
+| Face / Pose landmark detection | Pre-trained deep learning (MediaPipe) | Genuine learned perception — detects geometry from pixels, a task rules cannot do |
+| Acupressure point recommendation | Rule-based expert system (Section 4.2) | Decision logic kept fully explainable and auditable, given no outcome-labelled training data exists |
+
+### 4.2 Why the Recommendation Engine Is Rule-Based, Not Machine-Learned
+Training a model implies learning a pattern from labelled examples. At present there is no dataset of the form "this pain context led to this point being reported as helpful" — the project has not yet been used by enough real people to generate one. Training anything on zero real outcome data would not produce a genuinely predictive model; it would produce a system that looks like AI while actually encoding either pure guesswork or the author's own assumptions twice removed.
+
+The rule-based alternative encodes the same domain knowledge — zone-to-point associations referenced from acupressure literature, modified by pain type, severity, and medical history — directly and transparently. Every recommendation can be traced to the exact rule that produced it, which matters in a health-adjacent context where an unexplainable wrong answer is a worse failure mode than an explainable mediocre one. Section 11 describes the specific, data-driven path to a learned re-ranking layer once real feedback (already being collected via the existing thumbs up/down mechanism) reaches a usable volume.
+
+### 4.3 Other Key Engineering Decisions
+- **CSS mirror system** — both the `<video>` and `<canvas>` elements are CSS-mirrored (`scaleX(-1)`) rather than flipping coordinates in JavaScript, so raw MediaPipe image-space coordinates remain correct after the visual flip, avoiding a class of off-by-mirroring bugs.
+- **Three rendering modes, chosen automatically** — face-tracked, pose-tracked, or static diagram — because a front-facing camera cannot physically see the back of the skull or the nape of the neck. Routing those zones to a diagram instead of pretending to track them is a safety and honesty choice, not a shortcut.
+- **Single source of truth** — `zoneAcupressureConfig.js` defines, for every zone, its mode, AR derivation function, instruction text, and duration in one place, so the session dispatcher never branches on zone-specific logic directly.
+- **Consistent backend field naming** — the API always returns `point_id` and `name_en`; the frontend never re-maps these to different local names, removing an entire category of silent mismatch bugs.
+- **Red-flag short-circuit** — the severity/pain-type check for possible red-flag symptoms runs before scoring, not after, so a concerning combination never reaches the point-recommendation logic at all.
+- **Centralized API client with silent token refresh** — a single Axios instance (`utils/api.js`) attaches the access token to every outgoing request and, on a 401 response, transparently calls `/auth/refresh`, rotates both tokens in `localStorage`, and retries the original request. Concurrent 401s arriving at the same moment are queued so only one refresh call is ever in flight, rather than racing.
+- **Route-level authentication guard** — a `ProtectedRoute` wrapper redirects unauthenticated visitors to `/login` before any protected screen renders, applied uniformly across all 8 application routes, rather than each component checking auth state independently.
+- **Secondary-point de-duplication** — the guided session filters the secondary point against the primary point's `point_id` before rendering, so a session can never instruct the same point twice.
+- **Inline validation over `alert()`** — the severity step validates that symptoms and pain types are non-empty before calling the API, surfacing problems as an inline banner in the UI rather than a blocking browser alert.
+
+---
+
+## 5. Module-Level Design
+
+### 5.1 Authentication and User Management
+Registration and login issue a short-lived JWT access token (1 hour) and a longer-lived refresh token (7 days); both are stored in `localStorage` and passwords are hashed with bcrypt before storage. Optional Google OAuth is supported via fastapi-sso. All requests are routed through the centralized Axios client (Section 4.3), which attaches the access token automatically and silently refreshes it on expiry, so individual components never handle token plumbing directly.
+
+Every one of the 8 application routes other than the landing, signup, and login pages is wrapped in a `ProtectedRoute` component, which redirects an unauthenticated visitor to `/login` before the underlying screen ever renders. Logging out calls `POST /auth/logout` with the stored refresh token — revoking the session server-side — before clearing `localStorage`, so a stolen refresh token cannot be replayed after the user has explicitly signed out. A `GET /auth/me` endpoint returns the current user's email, `medical_history`, and `medical_history_completed` flag, and is the source of truth the dashboard reads from (Section 5.9) rather than re-deriving this from cached client state.
+
+Every protected backend route depends on a `get_current_user` FastAPI dependency that decodes the JWT and resolves the requesting user's email.
+
+### 5.2 Medical History Intake
+Immediately after signup, the user selects from 8 body-region sections, each with 6 pre-defined conditions (48 total), stored against their account. This history is later consulted by the recommendation engine's history-matching rule (Section 5.5).
+
+### 5.3 3D Body and Head Visualization
+The full-body view lets the user pick a region, which switches to a region-specific Three.js view. The head region is the most developed: `HeadView.jsx` renders 16 invisible, individually named clickable 3D zones layered over a head model, resolved via raycasting on click.
+
+### 5.4 Pain Assessment Flow
+A three-step guided flow collects: (1) symptom checkboxes plus a free-text "other" field, (2) multi-select pain type (sharp, throbbing, dull, etc.), and (3) a 1–10 severity slider. The severity step is also where the red-flag check (Section 5.5) is first surfaced to the user, with a warning shown at severity ≥ 8.
+
+### 5.5 Recommendation Engine
+Implemented in `acupressure_engine.py` as pure, dependency-free Python logic. Before any scoring occurs, a red-flag check runs: severity ≥ 9 **or** severity ≥ 7 combined with a Sharp/Stabbing or Acute/Sudden pain type returns `redFlag: true` immediately, bypassing point selection entirely — either condition alone is sufficient (this was previously implemented as requiring both simultaneously, which under-triggered the safety check; it has since been corrected to the wider OR condition). Otherwise, every candidate point for the selected zone is scored:
+
+| Rule | Score contribution |
+|---|---|
+| Point is the zone's primary point | +5.0 |
+| Point is the zone's secondary point | +3.0 |
+| Point's `boost_pain_types` list matches a reported pain type | +2.0 per match |
+| Point's `boost_conditions` list matches a medical history entry | +2.0 per match |
+| Severity ≥ 7 (universal analgesic point, LI4) | +4.0, guaranteeing LI4 appears in the result |
+| Point was previously marked helpful by this specific user | +1.5 |
+
+The top three scored points are returned, each with its `point_id`, `name_en`, `score`, `description`, and `technique` — every field traceable back to exactly which rule fired. The last row above is a recent addition: the route layer queries `session_feedback` for this user's prior `helped: true` entries before calling the engine, and passes the matching point IDs in as an optional `helpful_point_ids` list. This is still a fixed, hand-set rule (a flat +1.5), not a learned weight — it personalizes results per user without crossing into the learned-model territory discussed in Section 4.2 and planned for in Section 11.
+
+### 5.6 Real-Time AR Guided Session
+
+| Mode | Component | Used for |
+|---|---|---|
+| face | FaceTrackedPoint.jsx | Temple, forehead, ear, jaw, and skull zones |
+| pose | PoseTrackedPoint.jsx | Shoulder and neck zones (falls back to diagram if landmark visibility < 0.5) |
+| diagram | DiagramPoint.jsx | Back-of-skull zone, and secondary points on the hand or wrist that a face-pointed camera cannot see |
+
+`FaceTrackedPoint.jsx` requests the camera, initializes the Face Landmarker (WASM, locally bundled), and on every animation frame calls `detectForVideo`, passes the result through the zone's `derive()` function (built from helpers `ed()`, `off()`, `mid()`, and `lerp()` over the raw landmarks) to get a pixel position, and draws a pulsing dot. `PoseTrackedPoint.jsx` follows the same structure with the Pose Landmarker, adding a visibility check that triggers an automatic switch to `DiagramPoint` when the relevant body part is not actually in frame.
+
+Before either point renders, `GuidedAcupressureSession.jsx` filters the secondary point against the primary point's `point_id`, discarding it if they match, so a session never instructs the user to press the same point twice under two different labels.
+
+### 5.7 Voice Guidance
+`useVoiceSequencer.js` drives a simple four-state machine — idle → speaking → counting → done. A `SpeechSynthesisUtterance` is queued for the point's instruction text; on speech end, a per-second countdown begins for that point's hold duration; reaching zero calls `onComplete`, which advances the session to the next point.
+
+### 5.8 Feedback Collection
+After both points in a session are shown, `/session-feedback` presents a thumbs up/down control plus an optional notes field per point, posted to `/recommendations/feedback` and stored in `session_feedback` — the data that already drives the personalization rule in Section 5.5 and will eventually seed the learned re-ranking layer in Section 11.
+
+### 5.9 Dashboard and Reporting
+`AccuDashboard.jsx` fetches real data on mount and on each tab switch rather than displaying placeholder content: `GET /auth/me` for the user's medical history, `GET /pain/assessment/history` for past sessions, and `GET /pain/assessment/stats` for aggregated figures (average severity, top symptoms). The Reports tab's Pain Frequency and Severity Trend charts are computed directly from this real session data. An earlier development-time placeholder (a fixed 5-item mock session list) has been removed entirely now that the real endpoints are wired in.
+
+---
+
+## 6. Complete User Flow
+
+Aside from the landing page, signup, and login routes, every route below sits behind a `ProtectedRoute` guard that redirects an unauthenticated visitor straight to `/login`.
+
+1. Landing page (`/`) — marketing content, Sign In / Get Started.
+2. Sign up (`/signup`) — `POST /auth/register`, then `/auth/login`; both the access token and refresh token are stored client-side; navigate to `/medical-history`. (The session-creation call below in step 3 used to be fired from this step too, duplicating it — that duplicate call has been removed.)
+3. Medical history (`/medical-history`) — select conditions across 8 sections; `POST /auth/medical-history`, then `POST /humanModel/start-session`; navigate to `/Accudashboard`.
+4. Dashboard (`/Accudashboard`) — profile, stats, session history, and the clickable 3D body model entry point.
+5. Full body view (`/fullbody`) — region picker; only the head region has the complete assessment flow wired up at present.
+6. Head view — user clicks one of 16 named 3D zones; `onZoneSelected(zoneName)` advances the state machine to the symptoms step.
+7. Assessment step 1 — symptom checkboxes plus optional free text.
+8. Assessment step 2 — multi-select pain type.
+9. Assessment step 3 — severity slider (1–10); red-flag warning shown at ≥ 8. The page validates that symptoms and pain types were actually selected before allowing submission, showing an inline banner rather than a browser alert if not.
+10. On submit — `POST /pain/assessment` (saves the record, returns `assessmentId`), then `POST /recommendations/predict` (runs the scoring engine, now also weighted by this user's own prior helpful-point feedback).
+11. Navigate to `/session` with `{ zone, recommendation, painTypes, severity, assessmentId }` passed via router state.
+12. Guided session — if `redFlag` is true, show the red-flag screen and stop; otherwise step intro → primary point → secondary point, each rendered via the mode appropriate to that point.
+13. Each point — voice instruction, live AR dot or diagram, countdown, then advance.
+14. Session feedback (`/session-feedback`) — thumbs up/down and notes per point, `POST /recommendations/feedback`, return to `/Accudashboard`.
+
+---
+
+## 7. API Reference
+
+| Method & Path | Auth | Purpose |
+|---|---|---|
+| POST /auth/register | No | Create a new user |
+| POST /auth/login | No | Returns access_token + refresh_token |
+| POST /auth/medical-history | Yes | Save selected conditions |
+| GET /auth/me | Yes | Return current user's email, `medical_history`, and `medical_history_completed` flag |
+| POST /auth/refresh | No (refresh token) | Rotate refresh token, issue new access token |
+| POST /auth/logout | Yes | Revoke refresh token |
+| GET /auth/google/login | No | Google OAuth redirect |
+| GET /auth/google/callback | No | Google OAuth callback |
+| POST /humanModel/start-session | Yes | Create a session record |
+| POST /humanModel/log-pain | Yes | Log a pain-area click |
+| POST /pain/assessment | Yes | Save a full assessment |
+| GET /pain/assessment/history | Yes | Get past assessments |
+| GET /pain/assessment/latest | Yes | Get most recent assessment |
+| GET /pain/assessment/stats | Yes | Aggregated stats (avg severity, top symptoms) |
+| DELETE /pain/assessment/{id} | Yes | Delete one assessment |
+| POST /recommendations/predict | Yes | Run the scoring engine — including a personalization boost from this user's own prior helpful-point feedback — and return ranked points |
+| POST /recommendations/feedback | Yes | Save thumbs up/down per point |
+
+---
+
+## 8. Testing and Evaluation
+
+### 8.1 Functional Test Matrix
+Each of the 16 zones should be exercised at least once against its assigned mode. Fill in Result as testing is performed:
+
+| Zone | Mode | Expected behavior | Result |
+|---|---|---|---|
+| Temple_Left / Temple_Right | face | Dot tracks temple as head turns | [ ] |
+| Mid_Forehead_Pain | face | Dot stays centered between brows | [ ] |
+| Forehead_Left / Forehead_Right | face | Dot sits above the correct eyebrow | [ ] |
+| Ear_Left / Ear_Right | face | Dot near the correct ear | [ ] |
+| Jaw_Cheek_Left / Jaw_Cheek_Right | face | Dot tracks jaw hinge area | [ ] |
+| Skull_Pain | face (approx.) | Dot near forehead hairline with head tilt prompt | [ ] |
+| Back_Neck_Pain | diagram | Static diagram shown, no camera tracking attempted | [ ] |
+| Neck_Center / Neck_Left / Neck_Right | pose | Dot tracks when shoulders in frame; falls back to diagram otherwise | [ ] |
+| Shoulder_Left / Shoulder_Right | pose | Dot tracks shoulder reliably when zoomed out | [ ] |
+
+### 8.2 User Evaluation Methodology
+Because the recommendation engine is rule-based rather than clinically validated, user-perceived usefulness should be measured directly using the thumbs up/down and notes mechanism already built into the system (Section 5.8). Recommended methodology: recruit a minimum of 10–15 volunteer testers, have each complete at least 3 sessions across different zones, and record the proportion of points marked helpful, broken down by mode (face / pose / diagram). Results to be inserted once collected:
+
+| Metric | Result |
+|---|---|
+| Number of testers | [n = __] |
+| Total sessions completed | [__] |
+| % of points marked "helpful" (face mode) | [__%] |
+| % of points marked "helpful" (pose mode) | [__%] |
+| % of points marked "helpful" (diagram mode) | [__%] |
+| Notable qualitative feedback | [insert representative comments] |
+
+---
+
+## 9. Ethical Considerations and Safety
+
+### 9.1 Wellness Disclaimer
+The session screen displays the following disclaimer text persistently:
+
+> "These suggestions are general wellness information based on traditional acupressure practice, not a medical diagnosis or treatment. They may help relieve mild discomfort but aren't a substitute for professional care — please see a doctor for severe, sudden, or persistent pain, or if you are pregnant or have a bleeding disorder."
+
+### 9.2 Red-Flag Safety Mechanism
+Severity ≥ 9, or severity ≥ 7 combined with Sharp/Stabbing or Acute/Sudden pain, bypasses point recommendation entirely and instead displays guidance to seek medical evaluation, on the basis that sudden severe head pain can have causes that self-administered acupressure should not be the first response to. (Either condition alone is sufficient to trigger this — an earlier version of the rule required both at once, which left a narrower safety margin than intended; this has been widened.)
+
+### 9.3 Contraindication Awareness
+Certain points are traditionally cautioned against under specific conditions — firm stimulation of points such as LI4 and GB21 during pregnancy, for example — and pressure should generally be avoided at sites of open wounds, recent surgery, or skin infection. The system does not currently collect pregnancy status; until it does, disclaimer language is kept general rather than implying false precision about who should avoid which point.
+
+### 9.4 Data Privacy
+Passwords are bcrypt-hashed; access is JWT-scoped with short-lived tokens and rotating refresh tokens; medical history is stored per-user and used only to inform that user's own recommendations. Most notably, all camera-derived facial and body landmark data is computed entirely client-side in the browser via WebAssembly — no video frame is ever transmitted to or stored on the server, which substantially limits the privacy surface of the most sensitive data type this system touches.
+
+---
+
+## 10. Limitations
+- A front-facing camera cannot see the back of the skull or the nape of the neck; those zones necessarily rely on a static diagram rather than live tracking.
+- The recommendation engine now applies a fixed, hand-set feedback boost (+1.5 for points this specific user previously marked helpful — Section 5.5), but this is still a rule, not a learned weight; the engine does not yet adapt its scoring from data the way a trained model would (see Future Work).
+- No clinical outcome validation has been performed; effectiveness claims rest on third-party literature (Section 2.1), not on this system's own results.
+- Only head, neck, and shoulder zones are fully wired into the assessment flow; other body regions are modelled in 3D but not yet connected.
+- AR point placement is derived geometrically from a small set of reliable landmarks (Section 5.6) and may require per-device/lighting calibration for best accuracy.
+
+---
+
+## 11. Future Work
+1. **Learned re-ranking layer** — the engine already applies a fixed +1.5 rule-based boost to previously-helpful points (Section 5.5); once `session_feedback` accumulates roughly 150–300+ entries per zone, replace that fixed boost with a learned weight (logistic regression or gradient-boosted trees) predicting P(helped | context, point), blended with the existing rule-based score rather than replacing it outright.
+2. **Full-body expansion** — extend the assessment flow and zone-to-point knowledge base to the trunk, legs, and hand views already present in the 3D model layer.
+3. **Structured user study** — a small but properly designed pre/post pain-rating study to begin generating real evidence about this specific implementation, rather than relying solely on general acupressure literature.
+4. **Mobile application** — the entirely client-side AR/voice architecture is well suited to a native or PWA mobile build.
+5. **Multilingual voice guidance** — Web Speech API supports multiple synthesis voices/locales with minimal additional engineering.
+
+---
+
+## 12. Conclusion
+Pressurance demonstrates a complete pipeline from structured pain intake through transparent point recommendation to real-time, camera-guided acupressure instruction, covering all 16 head, neck, and shoulder zones with an explicit, honest handling of what a front-facing camera can and cannot show. Its central architectural choice — pairing genuine pre-trained perception models with an explainable rule-based decision layer, rather than an unvalidated learned model — reflects a defensible engineering judgment given the data actually available, while leaving a concrete, data-driven path open for a learned layer once real usage feedback exists.
+
+---
+
+## References
+
+[1] National Center for Complementary and Integrative Health (NCCIH). Acupuncture: Effectiveness and Safety. https://www.nccih.nih.gov/health/acupuncture-effectiveness-and-safety
+
+[2] Lee MS, Pittler MH, Shin BC, Ernst E. Acupressure for treating headache: a systematic review. Indexed on PubMed, PMID: 19186062. https://pubmed.ncbi.nlm.nih.gov/19186062/
+
+[3] Google. MediaPipe Solutions — Face Landmarker and Pose Landmarker documentation. https://developers.google.com/mediapipe
+
+[4] FastAPI documentation. https://fastapi.tiangolo.com
+
+[5] Motor — asynchronous Python driver for MongoDB, documentation. https://motor.readthedocs.io
+
+*Add any additional literature-review sources from your own coursework here — references [1]–[2] are general evidence on acupressure/acupuncture; your department may expect additional peer-reviewed sources specific to your literature review chapter.*
+
+---
+
+## Appendix A: Complete Zone-to-Point Mapping
+
+| Zone | Primary point | Secondary point | Mode |
+|---|---|---|---|
+| Temple_Left / Temple_Right | Taiyang | GB20 | face |
+| Mid_Forehead_Pain | Yintang | GB14 | face |
+| Forehead_Left / Forehead_Right | GB14 (Yangbai) | Yintang | face |
+| Ear_Left / Ear_Right | TB21 (Ermen) | GB20 | face |
+| Skull_Pain | GV20 (Baihui) | GB20 | face (approx.) |
+| Jaw_Cheek_Left / Jaw_Cheek_Right | ST7 (Xiaguan) | SI18 | face |
+| Back_Neck_Pain | GB20 (Fengchi) | BL10 | diagram |
+| Neck_Center / Neck_Left / Neck_Right | GB21 (Jianjing) | BL10 | pose |
+| Shoulder_Left / Shoulder_Right | GB21 (Jianjing) | BL10 | pose |

@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import "../styles/Headsymptomsview.css";
-import PainTypeView from "./PainTypeView";  // ✅ FIXED - Correct import
+import PainTypeView from "./PainTypeView";
 import PainSeverityView from "./PainSeverityView_FastAPI";
+import MigraineAuraCheck from "./MigraineAuraCheck";
 
-export default function Headsymptomsview({ onBack }) {
+// Zones where migraine subtype classification is clinically meaningful
+const MIGRAINE_ZONES = new Set([
+  "Temple_Left", "Temple_Right",
+  "Mid_Forehead_Pain",
+  "Forehead_Left", "Forehead_Right",
+  "Skull_Pain",
+]);
+
+export default function Headsymptomsview({ onBack, zone }) {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [otherText, setOtherText] = useState("");
-  const [currentStep, setCurrentStep] = useState("symptoms");
-  const [painTypeData, setPainTypeData] = useState(null);
+  const [otherText, setOtherText]               = useState("");
+  const [currentStep, setCurrentStep]           = useState("symptoms");
+  const [painTypeData, setPainTypeData]         = useState(null);
+  const [auraData, setAuraData]                 = useState(null);
+
+  const isMigraineZone = MIGRAINE_ZONES.has(zone);
 
   const symptoms = [
     "Dull forehead ache",
@@ -24,89 +36,86 @@ export default function Headsymptomsview({ onBack }) {
     "Lasts > 3 days",
     "Fever or stiff neck",
     "Numbness / weakness",
-    "After injury"
+    "After injury",
   ];
 
-  const toggleSymptom = (symptom) => {
-    setSelectedSymptoms((prev) =>
-      prev.includes(symptom)
-        ? prev.filter((s) => s !== symptom)
-        : [...prev, symptom]
+  const toggleSymptom = (symptom) =>
+    setSelectedSymptoms(prev =>
+      prev.includes(symptom) ? prev.filter(s => s !== symptom) : [...prev, symptom]
     );
-  };
 
   const handleContinue = () => {
     if (selectedSymptoms.length === 0 && !otherText.trim()) {
       alert("Please select at least one symptom or describe your symptom!");
       return;
     }
-    
-    console.log("✅ Selected symptoms:", selectedSymptoms);
-    console.log("✅ Other text:", otherText);
     setCurrentStep("painType");
-  };
-
-  const handleBackToSymptoms = () => {
-    console.log("⬅️ Going back to symptoms");
-    setCurrentStep("symptoms");
   };
 
   const handlePainTypeContinue = (selectedPainTypes) => {
-    console.log("✅ Pain types selected:", selectedPainTypes);
     setPainTypeData(selectedPainTypes);
+    // Insert aura check only for migraine zones
+    setCurrentStep(isMigraineZone ? "aura" : "severity");
+  };
+
+  const handleAuraContinue = (collectedAura) => {
+    setAuraData(collectedAura);
     setCurrentStep("severity");
   };
 
-  const handleBackToPainType = () => {
-    console.log("⬅️ Going back to pain type");
-    setCurrentStep("painType");
+  const handleAuraSkip = () => {
+    setAuraData(null);
+    setCurrentStep("severity");
   };
 
-  const handleSeverityComplete = (result) => {
-    console.log("✅ Assessment completed:", result);
-    alert("Pain assessment saved successfully!");
-    // Reset to beginning
+  const handleSeverityComplete = () => {
     setCurrentStep("symptoms");
     setSelectedSymptoms([]);
     setOtherText("");
     setPainTypeData(null);
+    setAuraData(null);
   };
 
-  // Step 3: Severity View
+  // ── Step: Aura Check (migraine zones only) ─────────────────────────────
+  if (currentStep === "aura") {
+    return (
+      <MigraineAuraCheck
+        onBack={() => setCurrentStep("painType")}
+        onContinue={handleAuraContinue}
+        onSkip={handleAuraSkip}
+      />
+    );
+  }
+
+  // ── Step: Severity ─────────────────────────────────────────────────────
   if (currentStep === "severity") {
-    const symptomsData = {
-      symptoms: selectedSymptoms,
-      other: otherText,
-      bodyPart: "Head"
-    };
-
-    console.log("📊 Sending to severity:", { symptomsData, painTypeData });
-
+    const symptomsData = { symptoms: selectedSymptoms, other: otherText, bodyPart: "Head" };
     return (
       <PainSeverityView
-        onBack={handleBackToPainType}
+        onBack={() => setCurrentStep(isMigraineZone ? "aura" : "painType")}
         onComplete={handleSeverityComplete}
         symptomsData={symptomsData}
         painTypeData={painTypeData}
+        auraData={auraData}
+        zone={zone}
       />
     );
   }
 
-  // Step 2: Pain Type View
+  // ── Step: Pain Type ────────────────────────────────────────────────────
   if (currentStep === "painType") {
     return (
-      <PainTypeView 
-        onBack={handleBackToSymptoms} 
-        onContinue={handlePainTypeContinue} 
+      <PainTypeView
+        onBack={() => setCurrentStep("symptoms")}
+        onContinue={handlePainTypeContinue}
       />
     );
   }
 
-  // Step 1: Symptoms Selection (default)
+  // ── Step: Symptoms (default) ───────────────────────────────────────────
   return (
     <div className="symptoms-container">
       <div className="symptoms-wrapper">
-        {/* Header with Back Button */}
         <div className="back-button-section">
           <button onClick={onBack} className="back-button">
             <div className="back-icon-circle">
@@ -116,15 +125,12 @@ export default function Headsymptomsview({ onBack }) {
           </button>
         </div>
 
-        {/* Main Card */}
         <div className="symptoms-card">
-          {/* Title Section */}
           <div className="title-section">
             <h1 className="main-title">Tell us what you're feeling</h1>
             <p className="subtitle">Select the symptoms that best describe your pain.</p>
           </div>
 
-          {/* Symptoms List */}
           <div className="symptoms-list">
             {symptoms.map((symptom, index) => (
               <label key={index} className="symptom-item">
@@ -138,7 +144,6 @@ export default function Headsymptomsview({ onBack }) {
               </label>
             ))}
 
-            {/* Other Option */}
             <div className="other-symptom">
               <div className="other-label">
                 <span>Other, then specify:</span>
@@ -146,21 +151,20 @@ export default function Headsymptomsview({ onBack }) {
               <input
                 type="text"
                 value={otherText}
-                onChange={(e) => setOtherText(e.target.value)}
+                onChange={e => setOtherText(e.target.value)}
                 placeholder="Describe your symptom..."
                 className="other-input"
               />
             </div>
           </div>
 
-          {/* Continue Button */}
-          <button 
-            onClick={handleContinue} 
+          <button
+            onClick={handleContinue}
             className="continue-button"
             disabled={selectedSymptoms.length === 0 && !otherText.trim()}
             style={{
               opacity: (selectedSymptoms.length === 0 && !otherText.trim()) ? 0.5 : 1,
-              cursor: (selectedSymptoms.length === 0 && !otherText.trim()) ? 'not-allowed' : 'pointer'
+              cursor:  (selectedSymptoms.length === 0 && !otherText.trim()) ? "not-allowed" : "pointer",
             }}
           >
             Continue ({selectedSymptoms.length} symptoms)

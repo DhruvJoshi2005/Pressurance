@@ -1,0 +1,267 @@
+.fad-root {
+  min-height: 100vh;
+  background: #0f172a;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+.fad-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(8px);
+  background: rgba(15,23,42,0.9);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.fad-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.fad-demo-badge {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.fad-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.fad-icon-btn:hover       { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+.fad-icon-btn--active     { background: rgba(59,130,246,0.25); color: #60a5fa; border-color: #3b82f6; }
+
+/* ── Main ────────────────────────────────────────────────────────────── */
+.fad-main {
+  flex: 1;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.fad-intro { text-align: center; }
+.fad-intro h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; color: #f1f5f9; }
+.fad-intro p  { color: #94a3b8; font-size: 0.95rem; }
+
+/* ── Camera container ────────────────────────────────────────────────── */
+.fad-camera-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 4/3;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 40px rgba(59,130,246,0.12);
+}
+
+/* Both video + canvas are mirrored so it feels like a selfie camera */
+.fad-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.fad-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);   /* mirror to match video */
+  pointer-events: none;
+}
+
+/* Overlays (loading / error / idle) */
+.fad-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.95rem;
+  color: #94a3b8;
+  background: rgba(15,23,42,0.88);
+  backdrop-filter: blur(4px);
+}
+
+.fad-idle-overlay   { color: #475569; }
+.fad-error-overlay  { color: #f87171; }
+.fad-loading-sub    { font-size: 0.8rem; color: #64748b; }
+
+/* Spinner */
+.fad-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(99,102,241,0.25);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: fad-spin 0.85s linear infinite;
+}
+@keyframes fad-spin { to { transform: rotate(360deg); } }
+
+/* ── Caption ─────────────────────────────────────────────────────────── */
+.fad-caption {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 640px;
+  background: rgba(30,41,59,0.95);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 0.875rem 1.1rem;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  backdrop-filter: blur(6px);
+}
+.fad-caption-icon { color: #60a5fa; flex-shrink: 0; }
+.fad-caption-text { flex: 1; }
+.fad-countdown {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #60a5fa;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+  padding-left: 0.5rem;
+}
+
+/* ── Controls ─────────────────────────────────────────────────────────── */
+.fad-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.fad-btn {
+  padding: 0.75rem 2.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.fad-btn--primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+.fad-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(99,102,241,0.5); }
+.fad-btn--stop {
+  background: rgba(239,68,68,0.15);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.35);
+}
+.fad-btn--stop:hover { background: rgba(239,68,68,0.25); }
+
+/* ── Legend ──────────────────────────────────────────────────────────── */
+.fad-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.fad-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(30,41,59,0.6);
+  font-size: 0.8rem;
+  color: #94a3b8;
+  transition: all 0.2s;
+}
+.fad-legend-item--active {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,0.15);
+  color: #93c5fd;
+}
+.fad-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+  flex-shrink: 0;
+}
+.fad-legend-item--active .fad-legend-dot {
+  background: #60a5fa;
+  box-shadow: 0 0 6px #60a5fa;
+}
+
+/* ── Calibration notice ──────────────────────────────────────────────── */
+.fad-calib-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 640px;
+  background: rgba(234,179,8,0.1);
+  border: 1px solid rgba(234,179,8,0.3);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: #fde68a;
+  line-height: 1.5;
+}
+.fad-calib-notice code {
+  background: rgba(234,179,8,0.15);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+/* ── Disclaimer ──────────────────────────────────────────────────────── */
+.fad-disclaimer {
+  font-size: 0.75rem;
+  color: #475569;
+  text-align: center;
+  max-width: 540px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .fad-intro h1 { font-size: 1.3rem; }
+  .fad-btn { padding: 0.75rem 1.75rem; }
+}

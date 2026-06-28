@@ -1,0 +1,264 @@
+/* ── Root ─────────────────────────────────────────────────────────────────── */
+.gs-root {
+  min-height: 100vh;
+  background: #0f172a;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.gs-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.gs-title { flex: 1; display: flex; flex-direction: column; }
+.gs-title-main { font-weight: 700; font-size: 0.95rem; color: #e2e8f0; }
+.gs-title-sub  { font-size: 0.72rem; color: #64748b; }
+
+.gs-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.gs-icon-btn:hover        { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+.gs-icon-btn--active      { background: rgba(59,130,246,0.25); color: #60a5fa; border-color: #3b82f6; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+.gs-main {
+  flex: 1;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.gs-main--diagram { max-width: 560px; }
+
+/* ── Camera ──────────────────────────────────────────────────────────────── */
+.gs-camera-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 4/3;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 40px rgba(59,130,246,0.1);
+}
+
+/* Both video + canvas mirrored — selfie feel */
+.gs-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.gs-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+/* Pose canvas: purple accent instead of blue */
+.gs-canvas--pose { }
+
+/* ── Overlays ────────────────────────────────────────────────────────────── */
+.gs-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.75rem; text-align: center; padding: 1.5rem;
+  color: #94a3b8;
+  background: rgba(15,23,42,0.88);
+  backdrop-filter: blur(4px);
+  font-size: 0.95rem;
+}
+.gs-overlay--error { color: #f87171; }
+.gs-overlay-sub    { font-size: 0.8rem; color: #64748b; }
+
+.gs-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(99,102,241,0.25);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: gs-spin 0.85s linear infinite;
+}
+@keyframes gs-spin { to { transform: rotate(360deg); } }
+
+/* ── Tip banner ──────────────────────────────────────────────────────────── */
+.gs-tip {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 640px;
+  padding: 0.6rem 1rem;
+  background: rgba(234,179,8,0.1);
+  border: 1px solid rgba(234,179,8,0.3);
+  border-radius: 10px;
+  font-size: 0.82rem; color: #fde68a;
+}
+.gs-tip-close { background: none; border: none; color: #fde68a; cursor: pointer; font-size: 1rem; padding: 0 0.25rem; }
+
+/* ── Caption ─────────────────────────────────────────────────────────────── */
+.gs-caption {
+  display: flex; align-items: center; gap: 0.6rem;
+  width: 100%; max-width: 640px;
+  background: rgba(30,41,59,0.95);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 0.875rem 1.1rem;
+  font-size: 0.95rem; color: #cbd5e1;
+}
+.gs-caption-icon { color: #60a5fa; flex-shrink: 0; }
+.gs-caption-text { flex: 1; }
+.gs-countdown {
+  font-size: 1.3rem; font-weight: 700; color: #60a5fa;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto; padding-left: 0.5rem;
+}
+
+/* ── Point info chip ─────────────────────────────────────────────────────── */
+.gs-point-info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  width: 100%; max-width: 640px;
+}
+.gs-point-code   { background: rgba(59,130,246,0.2); color: #60a5fa; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+.gs-point-name   { font-size: 0.9rem; color: #cbd5e1; font-weight: 600; }
+.gs-point-reason { font-size: 0.8rem; color: #64748b; flex-basis: 100%; }
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+.gs-controls { display: flex; gap: 0.75rem; justify-content: center; }
+
+.gs-btn {
+  padding: 0.75rem 2.5rem; border-radius: 10px;
+  font-size: 1rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.gs-btn--primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+.gs-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(99,102,241,0.5); }
+.gs-btn--stop {
+  background: rgba(239,68,68,0.15); color: #f87171;
+  border: 1px solid rgba(239,68,68,0.35);
+}
+.gs-btn--stop:hover { background: rgba(239,68,68,0.25); }
+
+.gs-fallback-link {
+  background: none; border: none; color: #475569;
+  font-size: 0.78rem; cursor: pointer; text-decoration: underline;
+  margin-top: -0.5rem;
+}
+.gs-fallback-link:hover { color: #94a3b8; }
+
+/* ── Diagram ─────────────────────────────────────────────────────────────── */
+.gs-diagram-wrap {
+  width: 100%; max-width: 380px;
+  background: rgba(30,41,59,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex; justify-content: center;
+}
+
+.gs-diagram-svg {
+  width: 100%; max-width: 300px; height: auto;
+}
+
+.gs-diagram-generic {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  padding: 2rem; text-align: center;
+}
+.gs-diagram-code  { font-size: 2.5rem; font-weight: 800; color: #3b82f6; letter-spacing: -1px; }
+.gs-diagram-label { font-size: 1rem; color: #cbd5e1; font-weight: 600; }
+.gs-diagram-tip   { font-size: 0.85rem; color: #64748b; margin-top: 0.5rem; }
+
+/* ── Disclaimer ──────────────────────────────────────────────────────────── */
+.gs-disclaimer {
+  font-size: 0.73rem; color: #475569;
+  text-align: center; max-width: 500px;
+  line-height: 1.6; font-style: italic;
+}
+
+/* ── Red flag screen ─────────────────────────────────────────────────────── */
+.gs-redflag-root {
+  min-height: 100vh; background: #0f172a;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 2rem; text-align: center; gap: 1.25rem;
+}
+.gs-redflag-icon { font-size: 3.5rem; }
+.gs-redflag-title { font-size: 1.5rem; font-weight: 700; color: #f87171; }
+.gs-redflag-body  { color: #94a3b8; font-size: 0.95rem; max-width: 420px; line-height: 1.7; }
+.gs-redflag-tel   { font-size: 1.5rem; font-weight: 800; color: #f87171; margin: 0.5rem 0; }
+.gs-redflag-sub   { font-size: 0.8rem; color: #64748b; }
+.gs-redflag-back  { margin-top: 1rem; }
+
+/* ── Session intro card ─────────────────────────────────────────────────── */
+.gs-intro-root {
+  min-height: 100vh; background: #0f172a;
+  display: flex; flex-direction: column;
+}
+.gs-intro-main {
+  flex: 1; max-width: 560px; width: 100%;
+  margin: 0 auto; padding: 2rem 1rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.gs-intro-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(59,130,246,0.15); color: #60a5fa;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 0.8rem; font-weight: 600; width: fit-content;
+}
+.gs-intro-zone  { font-size: 2rem; font-weight: 800; color: #f1f5f9; line-height: 1.2; }
+.gs-intro-point { font-size: 1rem; color: #93c5fd; font-weight: 600; }
+.gs-intro-instruction { color: #94a3b8; font-size: 0.95rem; line-height: 1.7; }
+.gs-intro-mode-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+  border: 1px solid;
+}
+.gs-intro-mode-badge--face   { color: #60a5fa; border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.1); }
+.gs-intro-mode-badge--pose   { color: #a78bfa; border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.1); }
+.gs-intro-mode-badge--diagram{ color: #34d399; border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.1); }
+
+.gs-intro-severity-note {
+  background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3);
+  border-radius: 10px; padding: 0.75rem 1rem;
+  font-size: 0.82rem; color: #fde68a; line-height: 1.6;
+}
+.gs-intro-disclaimer {
+  font-size: 0.72rem; color: #475569; line-height: 1.6; font-style: italic;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .gs-btn { padding: 0.75rem 1.75rem; }
+  .gs-intro-zone { font-size: 1.5rem; }
+}

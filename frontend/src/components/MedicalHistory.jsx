@@ -149,6 +149,7 @@ export default function MedicalHistory() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    localStorage.setItem("medicalHistory", JSON.stringify(selected));
     try {
       const token = localStorage.getItem("token");
       await axios.post(

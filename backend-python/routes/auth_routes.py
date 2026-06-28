@@ -170,6 +170,18 @@ async def save_medical_history(request: Request, email: str = Depends(get_curren
     )
     return {"msg": "Medical history saved"}
 
+@router.get("/me")
+async def get_me(email: str = Depends(get_current_user)):
+    users = db["users"]
+    user = await users.find_one({"email": email}, {"password": 0, "refresh_tokens": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {
+        "email": email,
+        "medical_history": user.get("medical_history", {}),
+        "medical_history_completed": user.get("medical_history_completed", False),
+    }
+
 @router.post("/logout")
 async def logout(request: Request):
     body = await request.json()

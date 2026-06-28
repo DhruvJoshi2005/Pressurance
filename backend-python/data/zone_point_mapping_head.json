@@ -1,0 +1,18 @@
+{
+  "Temple_Left":       { "primary": "TAIYANG", "secondary": "GB20" },
+  "Temple_Right":      { "primary": "TAIYANG", "secondary": "GB20" },
+  "Mid_Forehead_Pain": { "primary": "YINTANG", "secondary": "GB14" },
+  "Forehead_Left":     { "primary": "GB14",    "secondary": "YINTANG" },
+  "Forehead_Right":    { "primary": "GB14",    "secondary": "YINTANG" },
+  "Ear_Left":          { "primary": "TB21",    "secondary": "GB20" },
+  "Ear_Right":         { "primary": "TB21",    "secondary": "GB20" },
+  "Skull_Pain":        { "primary": "GV20",    "secondary": "GB20" },
+  "Back_Neck_Pain":    { "primary": "GB20",    "secondary": "BL10" },
+  "Jaw_Cheek_Left":    { "primary": "ST7",     "secondary": "SI18" },
+  "Jaw_Cheek_Right":   { "primary": "ST7",     "secondary": "SI18" },
+  "Neck_Center":       { "primary": "GB21",    "secondary": "BL10" },
+  "Neck_Left":         { "primary": "GB21",    "secondary": "BL10" },
+  "Neck_Right":        { "primary": "GB21",    "secondary": "BL10" },
+  "Shoulder_Left":     { "primary": "GB21",    "secondary": "BL10" },
+  "Shoulder_Right":    { "primary": "GB21",    "secondary": "BL10" }
+}

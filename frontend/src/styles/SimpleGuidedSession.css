@@ -1,0 +1,224 @@
+.gs-root {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.gs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.gs-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1e3a5f;
+}
+
+.gs-progress-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.gs-progress-bar {
+  height: 4px;
+  background: #e5e7eb;
+}
+.gs-progress-fill {
+  height: 100%;
+  background: #3b82f6;
+  transition: width 0.4s ease;
+}
+
+.gs-main {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  flex: 1;
+}
+
+.gs-card {
+  background: white;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+  text-align: center;
+}
+
+.gs-point-meta { margin-bottom: 0.75rem; }
+.gs-point-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 4px;
+}
+.gs-point-id {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-family: monospace;
+}
+
+.gs-location {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
+  color: #4b5563;
+  font-size: 0.9rem;
+  background: #f9fafb;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+.gs-location svg { flex-shrink: 0; margin-top: 2px; color: #6b7280; }
+
+.gs-technique {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* Timer */
+.gs-timer-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1.5rem;
+}
+.gs-timer-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.gs-circle-bg {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 8;
+}
+.gs-circle-progress {
+  fill: none;
+  stroke: #3b82f6;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+.gs-timer-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gs-timer-count {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+.gs-timer-done {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.gs-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.gs-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.gs-btn:hover { transform: translateY(-1px); }
+
+.gs-btn-primary {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 6px 16px rgba(59,130,246,0.3);
+}
+.gs-btn-primary:hover { background: #2563eb; }
+
+.gs-btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+.gs-btn-secondary:hover { background: #e5e7eb; }
+
+.gs-skip-link {
+  display: block;
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Upcoming list */
+.gs-upcoming {
+  margin-top: 1.5rem;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.gs-upcoming-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #9ca3af;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+.gs-upcoming-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 6px 0;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.gs-upcoming-item:last-child { border-bottom: none; }
+.gs-upcoming-num {
+  width: 22px;
+  height: 22px;
+  background: #eff6ff;
+  color: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.gs-upcoming-name { flex: 1; }
+.gs-upcoming-dur { color: #9ca3af; }
+
+.gs-empty {
+  text-align: center;
+  padding: 4rem;
+  color: #6b7280;
+}
+.gs-empty button { color: #3b82f6; background: none; border: none; cursor: pointer; }

@@ -6,12 +6,13 @@ import TrunkView from "./TrunkView";
 import LegsView from "./LegsView";
 import LeftHandView from "./LeftHandView";
 import RightHandView from "./RightHandView";
-import HeadSymptomsView from "./HeadSymptomsView";
+import HeadSymptomsView from "./Headsymptomsview";
 import { Activity, ArrowLeft, ChevronRight, MousePointerClick } from "lucide-react";
 import "./../styles/FullBodyView.css";
 
 export default function FullBodyView() {
   const [currentView, setCurrentView] = useState("fullBody");
+  const [selectedZone, setSelectedZone] = useState(null);
   const navigate = useNavigate();
 
   const handlePartClick = (partName) => {
@@ -27,10 +28,21 @@ export default function FullBodyView() {
   };
 
   const handleBackToFullBody = () => setCurrentView("fullBody");
-  const handleContinue = () => setCurrentView("headSymptoms");
 
-  if (currentView === "headSymptoms") return <HeadSymptomsView onBack={handleBackToFullBody} />;
-  if (currentView === "head")      return <HeadView      onBack={handleBackToFullBody} />;
+  const handleZoneSelected = (zone) => {
+    setSelectedZone(zone);
+    setCurrentView("headSymptoms");
+  };
+
+  // "Continue" button always routes through HeadView to ensure a zone is selected
+  const handleContinue = () => setCurrentView("head");
+
+  if (currentView === "headSymptoms") return (
+    <HeadSymptomsView onBack={() => setCurrentView("head")} zone={selectedZone} />
+  );
+  if (currentView === "head") return (
+    <HeadView onBack={handleBackToFullBody} onZoneSelected={handleZoneSelected} />
+  );
   if (currentView === "trunk")     return <TrunkView     onBack={handleBackToFullBody} />;
   if (currentView === "legs")      return <LegsView      onBack={handleBackToFullBody} />;
   if (currentView === "leftHand")  return <LeftHandView  onBack={handleBackToFullBody} />;

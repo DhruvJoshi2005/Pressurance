@@ -1,0 +1,374 @@
+[
+  {
+    "_id": "GB20",
+    "name_en": "Fengchi",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.3,
+      "y": 0.0,
+      "z": -0.65
+    },
+    "description": "In the hollow at the base of the skull, on either side of the spine.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Temple_Pain",
+      "Back_Neck_Pain",
+      "Skull_Pain",
+      "Ear_Pain",
+      "Neck_Center",
+      "Neck_Left",
+      "Neck_Right"
+    ],
+    "boost_conditions": [
+      "Migraine / Chronic Headaches",
+      "Vertigo / Dizziness",
+      "Cervical Spondylosis (Neck Stiffness)"
+    ],
+    "boost_pain_types": [
+      "Throbbing",
+      "Constant"
+    ],
+    "contraindications": [],
+    "boost_migraine_types": [
+      "Migraine without aura",
+      "Typical aura with migraine"
+    ]
+  },
+  {
+    "_id": "GV20",
+    "name_en": "Baihui",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0,
+      "y": 1.5,
+      "z": 0
+    },
+    "description": "At the crown of the head, along the midline, at the topmost point.",
+    "technique": {
+      "pressure": "gentle, circular",
+      "duration_seconds": 60,
+      "side": "midline"
+    },
+    "indications": [
+      "Skull_Pain"
+    ],
+    "boost_conditions": [
+      "Vertigo / Dizziness"
+    ],
+    "boost_pain_types": [],
+    "contraindications": [],
+    "boost_migraine_types": [
+      "Migraine without aura",
+      "Typical aura with migraine"
+    ]
+  },
+  {
+    "_id": "TAIYANG",
+    "name_en": "Taiyang",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.85,
+      "y": 0.55,
+      "z": 0.2
+    },
+    "description": "At the temple, in the hollow just beside the outer corner of the eye.",
+    "technique": {
+      "pressure": "gentle, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Temple_Pain"
+    ],
+    "boost_conditions": [
+      "Migraine / Chronic Headaches"
+    ],
+    "boost_pain_types": [
+      "Throbbing",
+      "Intermittent (comes and goes)"
+    ],
+    "contraindications": [],
+    "boost_migraine_types": [
+      "Migraine without aura",
+      "Typical aura with migraine"
+    ]
+  },
+  {
+    "_id": "YINTANG",
+    "name_en": "Yintang",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0,
+      "y": 0.85,
+      "z": 1.0
+    },
+    "description": "Between the eyebrows, at the bridge of the nose.",
+    "technique": {
+      "pressure": "gentle, circular",
+      "duration_seconds": 60,
+      "side": "midline"
+    },
+    "indications": [
+      "Mid_Forehead_Pain"
+    ],
+    "boost_conditions": [
+      "Sinusitis / Sinus Congestion"
+    ],
+    "boost_pain_types": [
+      "Pressure",
+      "Intermittent (comes and goes)"
+    ],
+    "contraindications": [],
+    "boost_migraine_types": [
+      "Typical aura with migraine",
+      "Typical aura without migraine"
+    ]
+  },
+  {
+    "_id": "GB14",
+    "name_en": "Yangbai",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.4,
+      "y": 0.95,
+      "z": 0.92
+    },
+    "description": "Directly above the eyebrow at its midpoint, about one finger-width up.",
+    "technique": {
+      "pressure": "gentle, upward",
+      "duration_seconds": 45,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Forehead_Left",
+      "Forehead_Right",
+      "Mid_Forehead_Pain"
+    ],
+    "boost_conditions": [
+      "Sinusitis / Sinus Congestion"
+    ],
+    "boost_pain_types": [
+      "Pressure"
+    ],
+    "contraindications": []
+  },
+  {
+    "_id": "LI20",
+    "name_en": "Yingxiang",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.28,
+      "y": 0.3,
+      "z": 1.0
+    },
+    "description": "Beside each nostril, in the slight groove where the nose meets the cheek.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Mid_Forehead_Pain"
+    ],
+    "boost_conditions": [
+      "Sinusitis / Sinus Congestion"
+    ],
+    "boost_pain_types": [],
+    "contraindications": []
+  },
+  {
+    "_id": "ST7",
+    "name_en": "Xiaguan",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.72,
+      "y": -0.05,
+      "z": 0.35
+    },
+    "description": "In front of the ear, in the depression formed when you open your mouth slightly.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Jaw_Cheek_Pain"
+    ],
+    "boost_conditions": [
+      "TMJ / Jaw Pain"
+    ],
+    "boost_pain_types": [
+      "Cramping"
+    ],
+    "contraindications": []
+  },
+  {
+    "_id": "SI18",
+    "name_en": "Quanliao",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.6,
+      "y": 0.05,
+      "z": 0.65
+    },
+    "description": "At the lower edge of the cheekbone, directly below the outer corner of the eye.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 45,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Jaw_Cheek_Pain"
+    ],
+    "boost_conditions": [
+      "TMJ / Jaw Pain"
+    ],
+    "boost_pain_types": [],
+    "contraindications": []
+  },
+  {
+    "_id": "TB21",
+    "name_en": "Ermen",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.82,
+      "y": 0.28,
+      "z": 0.05
+    },
+    "description": "Just in front of the ear opening, in the small notch felt when you open your jaw.",
+    "technique": {
+      "pressure": "gentle, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Ear_Pain"
+    ],
+    "boost_conditions": [
+      "Tinnitus (Ringing in Ears)"
+    ],
+    "boost_pain_types": [],
+    "contraindications": []
+  },
+  {
+    "_id": "BL10",
+    "name_en": "Tianzhu",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 0.3,
+      "y": -0.25,
+      "z": -0.65
+    },
+    "description": "At the nape of the neck, just below the base of the skull, one finger-width from the spine.",
+    "technique": {
+      "pressure": "firm, upward",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Back_Neck_Pain",
+      "Neck_Center",
+      "Neck_Left",
+      "Neck_Right"
+    ],
+    "boost_conditions": [
+      "Cervical Spondylosis (Neck Stiffness)"
+    ],
+    "boost_pain_types": [
+      "Constant",
+      "Chronic (long-term)"
+    ],
+    "contraindications": []
+  },
+  {
+    "_id": "GB21",
+    "name_en": "Jianjing",
+    "region": "head_neck",
+    "coordinates": {
+      "x": 1.5,
+      "y": -1.8,
+      "z": -0.5
+    },
+    "description": "At the highest point of the shoulder, midway between the neck and the shoulder tip.",
+    "technique": {
+      "pressure": "firm, downward",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [
+      "Neck_Center",
+      "Neck_Left",
+      "Neck_Right",
+      "Shoulder_Left",
+      "Shoulder_Right"
+    ],
+    "boost_conditions": [
+      "Cervical Spondylosis (Neck Stiffness)"
+    ],
+    "boost_pain_types": [
+      "Pressure"
+    ],
+    "contraindications": [
+      "If pregnant, consult a professional before applying pressure here."
+    ]
+  },
+  {
+    "_id": "LI4",
+    "name_en": "Hegu",
+    "region": "hand",
+    "coordinates": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "description": "On the back of the hand, in the webbing between the thumb and index finger.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [],
+    "boost_conditions": [],
+    "boost_pain_types": [],
+    "contraindications": [
+      "If pregnant, consult a professional before applying pressure here."
+    ],
+    "boost_migraine_types": [
+      "Migraine without aura"
+    ]
+  },
+  {
+    "_id": "PC6",
+    "name_en": "Neiguan",
+    "region": "hand",
+    "coordinates": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "description": "On the inner wrist, about three finger-widths below the wrist crease, between the two tendons.",
+    "technique": {
+      "pressure": "firm, circular",
+      "duration_seconds": 60,
+      "side": "bilateral"
+    },
+    "indications": [],
+    "boost_conditions": [
+      "Migraine / Chronic Headaches",
+      "Vertigo / Dizziness"
+    ],
+    "boost_pain_types": [
+      "Throbbing"
+    ],
+    "contraindications": [],
+    "boost_migraine_types": [
+      "Migraine without aura",
+      "Typical aura with migraine",
+      "Typical aura without migraine"
+    ]
+  }
+]

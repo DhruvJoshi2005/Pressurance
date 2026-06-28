@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { Activity, Eye, EyeOff, Mail, Lock, AlertCircle } from "lucide-react";
+import { Activity, Eye, EyeOff, Mail, Lock, AlertCircle, Zap } from "lucide-react";
+import api from "../utils/api";
 import "./../styles/Signup.css";
 
 export default function Signup() {
@@ -21,13 +21,13 @@ export default function Signup() {
     setLoading(true);
     setError("");
     try {
-      await axios.post("http://localhost:8000/auth/register", form);
-      const loginRes = await axios.post("http://localhost:8000/auth/login", form);
+      await api.post("/auth/register", form);
+      const loginRes = await api.post("/auth/login", form);
       localStorage.setItem("token", loginRes.data.access_token);
+      localStorage.setItem("refreshToken", loginRes.data.refresh_token);
       navigate("/medical-history");
     } catch (err) {
-      const msg = err.response?.data?.detail || "Signup failed. Please try again.";
-      setError(msg);
+      setError(err.response?.data?.detail || "Signup failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -35,24 +35,38 @@ export default function Signup() {
 
   return (
     <div className="auth-page">
+      {/* ── Left panel ── */}
       <div className="auth-left">
-        <div className="auth-brand">
-          <Activity size={28} strokeWidth={2.5} />
-          <span>Pressurance</span>
+        <div className="auth-left-inner">
+          <div className="auth-brand">
+            <Activity size={24} strokeWidth={2.5} />
+            <span>Pressurance</span>
+          </div>
+
+          <h2 className="auth-left-title">
+            Your health,<br /><span>understood.</span>
+          </h2>
+          <p className="auth-left-sub">
+            AI-powered pain assessment and personalised acupressure guidance —
+            all in one place.
+          </p>
+
+          <ul className="auth-features">
+            <li>3D body pain mapping</li>
+            <li>AI symptom diagnosis</li>
+            <li>Live camera acupressure guidance</li>
+            <li>Built-in safety red-flag detection</li>
+          </ul>
+
+          <div className="auth-left-badges">
+            <span className="auth-badge"><Zap size={10} /> Real-time AR</span>
+            <span className="auth-badge">3D Body Map</span>
+            <span className="auth-badge">Free Forever</span>
+          </div>
         </div>
-        <h2 className="auth-left-title">Your health, understood.</h2>
-        <p className="auth-left-sub">
-          AI-powered pain assessment and personalised acupressure guidance —
-          all in one place.
-        </p>
-        <ul className="auth-features">
-          <li>3D body pain mapping</li>
-          <li>AI symptom diagnosis</li>
-          <li>Live acupressure guidance</li>
-          <li>Specialist doctor connect</li>
-        </ul>
       </div>
 
+      {/* ── Right panel ── */}
       <div className="auth-right">
         <div className="auth-card">
           <div className="auth-card-header">
@@ -76,14 +90,10 @@ export default function Signup() {
               <div className="input-wrapper">
                 <Mail size={16} className="input-icon" />
                 <input
-                  name="email"
-                  type="email"
+                  name="email" type="email"
                   placeholder="you@example.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="auth-input"
-                  required
-                  autoComplete="email"
+                  value={form.email} onChange={handleChange}
+                  className="auth-input" required autoComplete="email"
                 />
               </div>
             </div>
@@ -93,22 +103,14 @@ export default function Signup() {
               <div className="input-wrapper">
                 <Lock size={16} className="input-icon" />
                 <input
-                  name="password"
-                  type={showPassword ? "text" : "password"}
+                  name="password" type={showPassword ? "text" : "password"}
                   placeholder="Minimum 8 characters"
-                  value={form.password}
-                  onChange={handleChange}
-                  className="auth-input"
-                  required
-                  minLength={8}
+                  value={form.password} onChange={handleChange}
+                  className="auth-input" required minLength={8}
                   autoComplete="new-password"
                 />
-                <button
-                  type="button"
-                  className="input-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                >
+                <button type="button" className="input-toggle"
+                  onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>

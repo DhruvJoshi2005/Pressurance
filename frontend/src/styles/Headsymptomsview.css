@@ -1,243 +1,118 @@
-/* HeadSymptomsView.css */
+/* ══════════════════════════════════════════════════════════════════════════════
+   HeadSymptomsView — premium light theme, consistent with Dashboard
+   ══════════════════════════════════════════════════════════════════════════════ */
 
 .symptoms-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 100%);
+  background: linear-gradient(160deg, #f0f6ff 0%, #eef3fb 50%, #f5f8fe 100%);
   padding: 2rem 1rem;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
-.symptoms-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-}
+.symptoms-wrapper { max-width: 800px; margin: 0 auto; }
 
-/* Back Button Section */
-.back-button-section {
-  margin-bottom: 2rem;
-}
+/* ── Back Button ─────────────────────────────────────────────────────────── */
+.back-button-section { margin-bottom: 1.5rem; }
 
 .back-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #4b5563;
-  transition: color 0.2s;
+  display: flex; align-items: center; gap: 0.5rem;
+  background: none; border: none; cursor: pointer;
+  color: #6b7280; font-family: inherit; font-size: 0.875rem; font-weight: 600;
+  padding: 6px 10px; border-radius: 8px; transition: color 0.15s, background 0.15s;
 }
-
-.back-button:hover {
-  color: #1f2937;
-}
+.back-button:hover { color: #1565c0; background: #f0f6ff; }
 
 .back-icon-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #60a5fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #f0f6ff; border: 1.5px solid rgba(21,101,192,0.2);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
 }
+.back-button:hover .back-icon-circle { background: #dbeafe; }
+.back-icon-circle svg { color: #1565c0; }
+.back-text { font-size: 0.875rem; font-weight: 600; }
 
-.back-button:hover .back-icon-circle {
-  background-color: #eff6ff;
-}
-
-.back-icon-circle svg {
-  color: #3b82f6;
-}
-
-.back-text {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-/* Main Card */
+/* ── Main Card ───────────────────────────────────────────────────────────── */
 .symptoms-card {
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  padding: 2.5rem;
+  background: #fff;
+  border: 1px solid rgba(21,101,192,0.08);
+  border-radius: 22px; padding: 2.5rem;
+  box-shadow: 0 8px 40px rgba(21,101,192,0.1), 0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* Title Section */
-.title-section {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
+/* ── Title ───────────────────────────────────────────────────────────────── */
+.title-section { text-align: center; margin-bottom: 2rem; }
 .main-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 900;
+  color: #0d1b2a; letter-spacing: -0.5px; margin-bottom: 0.5rem;
 }
+.subtitle { color: #6b7280; font-size: 0.95rem; line-height: 1.6; }
 
-.subtitle {
-  color: #6b7280;
-  font-size: 1rem;
-}
-
-/* Symptoms List */
-.symptoms-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
+/* ── Symptom Items ───────────────────────────────────────────────────────── */
+.symptoms-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
 
 .symptom-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-radius: 0.75rem;
-  border: 2px solid #e5e7eb;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: white;
+  border-radius: 11px; border: 1.5px solid #e5e7eb;
+  cursor: pointer; transition: all 0.15s; background: #fff;
 }
-
-.symptom-item:hover {
-  border-color: #93c5fd;
-  background-color: #f9fafb;
-}
+.symptom-item:hover { border-color: #93c5fd; background: #f0f6ff; }
+.symptom-item.selected { border-color: #1565c0; background: linear-gradient(135deg, #eff6ff, #dbeafe); }
 
 .symptom-label {
-  color: #374151;
-  font-weight: 500;
-  font-size: 0.95rem;
+  color: #374151; font-weight: 500; font-size: 0.93rem; font-family: 'Inter', sans-serif;
 }
+.symptom-item.selected .symptom-label { color: #1565c0; font-weight: 600; }
 
 .symptom-checkbox {
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 0.25rem;
-  border: 2px solid #d1d5db;
-  cursor: pointer;
-  accent-color: #3b82f6;
+  width: 18px; height: 18px; border-radius: 5px;
+  border: 2px solid #d1d5db; cursor: pointer;
+  accent-color: #1565c0; flex-shrink: 0;
 }
+.symptom-checkbox:focus { outline: 2px solid #3b82f6; outline-offset: 2px; }
 
-.symptom-checkbox:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* Other Symptom Input */
+/* ── Other Input ─────────────────────────────────────────────────────────── */
 .other-symptom {
-  padding: 1rem 1.25rem;
-  border-radius: 0.75rem;
-  border: 2px solid #e5e7eb;
-  transition: border-color 0.2s;
-  background: white;
+  padding: 1rem 1.25rem; border-radius: 11px;
+  border: 1.5px solid #e5e7eb; transition: border-color 0.15s; background: #fff;
 }
-
-.other-symptom:hover {
-  border-color: #93c5fd;
-}
+.other-symptom:hover { border-color: #93c5fd; }
 
 .other-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;
 }
-
-.other-label span {
-  color: #374151;
-  font-weight: 500;
-  font-size: 0.95rem;
-}
+.other-label span { color: #374151; font-weight: 600; font-size: 0.93rem; }
 
 .other-input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  border-bottom: 2px solid #d1d5db;
-  outline: none;
-  font-size: 0.95rem;
-  transition: border-color 0.2s;
-  background: transparent;
+  width: 100%; padding: 0.5rem 0.75rem;
+  border: none; border-bottom: 2px solid #e5e7eb; outline: none;
+  font-size: 0.93rem; font-family: 'Inter', sans-serif;
+  transition: border-color 0.15s; background: transparent; color: #0d1b2a;
 }
+.other-input:focus { border-bottom-color: #1565c0; }
+.other-input::placeholder { color: #9ca3af; }
 
-.other-input:focus {
-  border-bottom-color: #3b82f6;
-}
-
-.other-input::placeholder {
-  color: #9ca3af;
-}
-
-/* Continue Button */
+/* ── Continue Button ─────────────────────────────────────────────────────── */
 .continue-button {
-  width: 100%;
-  padding: 1rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
-  transition: all 0.2s;
+  width: 100%; padding: 13px; margin-top: 0.5rem;
+  background: linear-gradient(135deg, #1565c0, #0288d1);
+  color: #fff; border: none; border-radius: 11px;
+  font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 16px rgba(21,101,192,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+.continue-button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(21,101,192,0.45); }
+.continue-button:active { transform: translateY(0); }
 
-.continue-button:hover {
-  background-color: #2563eb;
-  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
-  transform: translateY(-1px);
-}
-
-.continue-button:active {
-  transform: translateY(0);
-}
-
-/* Responsive Design */
+/* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .symptoms-container {
-    padding: 1rem 0.5rem;
-  }
-
-  .symptoms-card {
-    padding: 1.5rem;
-    border-radius: 1rem;
-  }
-
-  .main-title {
-    font-size: 1.5rem;
-  }
-
-  .subtitle {
-    font-size: 0.875rem;
-  }
-
-  .symptom-item {
-    padding: 0.875rem 1rem;
-  }
-
-  .symptom-label {
-    font-size: 0.875rem;
-  }
-
-  .continue-button {
-    font-size: 1rem;
-  }
+  .symptoms-container { padding: 1rem 0.75rem; }
+  .symptoms-card { padding: 1.5rem; border-radius: 16px; }
+  .main-title { font-size: 1.4rem; }
 }
-
 @media (max-width: 480px) {
-  .main-title {
-    font-size: 1.25rem;
-  }
-
-  .symptom-item {
-    padding: 0.75rem 0.875rem;
-  }
-
-  .symptom-label {
-    font-size: 0.8125rem;
-  }
+  .main-title { font-size: 1.2rem; }
+  .symptom-item { padding: 0.75rem 0.875rem; }
+  .symptom-label { font-size: 0.85rem; }
 }

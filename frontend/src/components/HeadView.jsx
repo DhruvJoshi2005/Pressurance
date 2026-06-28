@@ -7,8 +7,9 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
 
-export default function HeadView({ onBack }) { // ← Added onBack prop
+export default function HeadView({ onBack, onZoneSelected }) {
   const mountRef = useRef(null);
+  const [selectedZone, setSelectedZone] = React.useState(null);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -52,6 +53,9 @@ export default function HeadView({ onBack }) { // ← Added onBack prop
     directionalLight.position.set(1, 2, 2);
     scene.add(directionalLight);
 
+    // Expose setSelectedZone to the THREE.js click handler via a ref-like closure
+    const setZone = (z) => setSelectedZone(z);
+
     // Clickable zones
     const painZones = [];
     function createPainZoneBox(x, y, z, name, posX, posY, posZ) {
@@ -74,17 +78,18 @@ export default function HeadView({ onBack }) { // ← Added onBack prop
       scene.add(fbx);
 
       // Zones
-      createPainZoneBox(0.2, 0.5, 0.7, "Temple_Pain", 0.7, 0.6, 0.1);
-      createPainZoneBox(0.2, 0.5, 0.7, "Temple_Pain", -0.7, 0.6, 0.1);
-      createPainZoneBox(0.3, 0.4, 0.2, "Mid_Forehead_Pain", 0, 1, 0.9);
-      createPainZoneBox(0.3, 0.4, 0.2, "Forehead_Left", 0.4, 1, 0.9);
-      createPainZoneBox(0.3, 0.4, 0.2, "Forehead_Right", -0.4, 1, 0.9);
-      createPainZoneBox(0.3, 0.6, 0.45, "Ear_Pain", 0.8, 0.24, -0.27);
-      createPainZoneBox(0.3, 0.6, 0.45, "Ear_Pain", -0.8, 0.24, -0.27);
-      createPainZoneBox(1.3, 0.2, 1.3, "Skull_Pain", 0, 1.4, 0);
-      createPainZoneBox(0.8, 1, 0.3, "Back_Neck_Pain", 0, -0.4, -0.7);
-      createPainZoneBox(0.5, 0.7, 0.6, "Jaw_Cheek_Pain", 0.5, -0.07, 0.5);
-      createPainZoneBox(0.5, 0.7, 0.6, "Jaw_Cheek_Pain", -0.5, -0.07, 0.5);
+      // posX +0.7 = viewer's right side of model (verify orientation with calibration tool)
+      createPainZoneBox(0.2, 0.5, 0.7, "Temple_Right",     0.7,  0.6,  0.1);
+      createPainZoneBox(0.2, 0.5, 0.7, "Temple_Left",     -0.7,  0.6,  0.1);
+      createPainZoneBox(0.3, 0.4, 0.2, "Mid_Forehead_Pain", 0,   1,    0.9);
+      createPainZoneBox(0.3, 0.4, 0.2, "Forehead_Left",    0.4,  1,    0.9);
+      createPainZoneBox(0.3, 0.4, 0.2, "Forehead_Right",  -0.4,  1,    0.9);
+      createPainZoneBox(0.3, 0.6, 0.45, "Ear_Right",       0.8,  0.24, -0.27);
+      createPainZoneBox(0.3, 0.6, 0.45, "Ear_Left",       -0.8,  0.24, -0.27);
+      createPainZoneBox(1.3, 0.2, 1.3, "Skull_Pain",       0,    1.4,  0);
+      createPainZoneBox(0.8, 1,   0.3, "Back_Neck_Pain",   0,   -0.4, -0.7);
+      createPainZoneBox(0.5, 0.7, 0.6, "Jaw_Cheek_Right",  0.5, -0.07, 0.5);
+      createPainZoneBox(0.5, 0.7, 0.6, "Jaw_Cheek_Left",  -0.5, -0.07, 0.5);
 
       createPainZoneBox(0.6, 1.0, 0.8, "Neck_Center", 0, -1, 0);
       createPainZoneBox(0.6, 1.0, 0.6, "Neck_Left", -0.5, -0.9, -0.3);
@@ -113,13 +118,12 @@ export default function HeadView({ onBack }) { // ← Added onBack prop
         if (currentlyGlowing === clicked) {
           outlinePass.selectedObjects = [];
           currentlyGlowing = null;
-          console.log(`Deselected: ${region}`);
+          setZone(null);
         } else {
           outlinePass.selectedObjects = [clicked];
           currentlyGlowing = clicked;
-          console.log(`Selected: ${region}`);
+          setZone(region);
 
-          // Call backend to log pain
           const token = localStorage.getItem("token");
           fetch("http://localhost:8000/humanModel/log-pain", {
             method: "POST",
@@ -130,7 +134,6 @@ export default function HeadView({ onBack }) { // ← Added onBack prop
             body: JSON.stringify({ area: region }),
           })
             .then((res) => res.json())
-            .then((data) => console.log("Server:", data))
             .catch((err) => console.error("Error:", err));
         }
       }
@@ -165,37 +168,70 @@ export default function HeadView({ onBack }) { // ← Added onBack prop
     };
   }, []);
 
+  const zoneLabelMap = {
+    Temple_Left: "Left Temple", Temple_Right: "Right Temple",
+    Mid_Forehead_Pain: "Mid Forehead",
+    Forehead_Left: "Left Forehead", Forehead_Right: "Right Forehead",
+    Ear_Left: "Left Ear", Ear_Right: "Right Ear",
+    Skull_Pain: "Top of Skull",
+    Back_Neck_Pain: "Back of Neck",
+    Jaw_Cheek_Left: "Left Jaw / Cheek", Jaw_Cheek_Right: "Right Jaw / Cheek",
+    Neck_Center: "Center Neck", Neck_Left: "Left Neck", Neck_Right: "Right Neck",
+    Shoulder_Left: "Left Shoulder", Shoulder_Right: "Right Shoulder",
+  };
+
   return (
     <div style={{ position: 'relative', width: "100%", height: "600px" }}>
-      {/* Back Button - Only show if onBack prop is provided */}
       {onBack && (
-        <button 
+        <button
           onClick={onBack}
           style={{
-            position: 'absolute',
-            top: '20px',
-            left: '20px',
-            zIndex: 1000,
-            padding: '12px 24px',
-            fontSize: '16px',
-            background: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
-            fontWeight: '500',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
+            position: 'absolute', top: '20px', left: '20px', zIndex: 1000,
+            padding: '10px 20px', fontSize: '15px', background: '#6b7280',
+            color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)', fontWeight: '500',
           }}
-          onMouseOver={(e) => e.target.style.background = '#0056b3'}
-          onMouseOut={(e) => e.target.style.background = '#007bff'}
         >
           ← Back to Full Body
         </button>
       )}
-      
+
+      {!selectedZone && (
+        <div style={{
+          position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
+          zIndex: 1000, background: 'rgba(0,0,0,0.6)', color: 'white',
+          padding: '10px 20px', borderRadius: '8px', fontSize: '14px', pointerEvents: 'none',
+        }}>
+          Click on a pain zone to select it
+        </div>
+      )}
+
+      {selectedZone && (
+        <div style={{
+          position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
+          zIndex: 1000, display: 'flex', alignItems: 'center', gap: '12px',
+        }}>
+          <div style={{
+            background: 'rgba(0,0,0,0.7)', color: 'white',
+            padding: '10px 16px', borderRadius: '8px', fontSize: '14px',
+          }}>
+            Selected: <strong>{zoneLabelMap[selectedZone] || selectedZone}</strong>
+          </div>
+          {onZoneSelected && (
+            <button
+              onClick={() => onZoneSelected(selectedZone)}
+              style={{
+                padding: '10px 22px', fontSize: '15px', background: '#3b82f6',
+                color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer',
+                fontWeight: '600', boxShadow: '0 4px 12px rgba(59,130,246,0.4)',
+              }}
+            >
+              Continue to Assessment →
+            </button>
+          )}
+        </div>
+      )}
+
       <div
         ref={mountRef}
         style={{ width: "100%", height: "600px", border: "1px solid #ccc" }}

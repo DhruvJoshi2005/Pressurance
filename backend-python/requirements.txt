@@ -8,3 +8,6 @@ python-jose[cryptography]
 fastapi-sso
 PyJWT
 email-validator
+scikit-learn
+joblib
+pandas
